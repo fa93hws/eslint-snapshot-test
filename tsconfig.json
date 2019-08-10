@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2020",
+    "baseUrl": "./",
+  }
+}
