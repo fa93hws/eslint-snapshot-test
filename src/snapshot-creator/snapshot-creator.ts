@@ -1,5 +1,5 @@
 import { Linter, RuleTesterConfig } from '@typescript-eslint/experimental-utils/dist/ts-eslint'
-import { Worker, WorkerType } from './worker';
+import { ErrorMarker } from './workers/error-marker';
 
 const linter = new Linter();
 
@@ -10,6 +10,6 @@ export class SnapshotCreator {
   }
 
   public mark<TOption extends readonly any[]>(code: string) {
-    return new Worker<TOption>(WorkerType.MARK);
+    return new ErrorMarker<TOption>(this.config, code);
   }
 }

@@ -1,7 +1,7 @@
 import { SnapshotCreator } from '../snapshot-creator';
 const semiRule = require('eslint/lib/rules/semi');
 
-describe('some', () => {
+describe('when set the config', () => {
   const snapshotCreator = new SnapshotCreator({
     parserOptions: {
       ecmaVersion: 2017,
@@ -14,11 +14,19 @@ describe('some', () => {
     options: ['always'],
   };
 
-  it('should', () => {
+  it('should combine the config to worker', () => {
     snapshotCreator
       .mark(code)
       .onRule(semiRule)
-      .withConfig(config)
-    console.log(snapshotCreator);
+      .withConfig(config);
+
+    expect((snapshotCreator as any).config).toEqual({
+      parserOptions: {
+        ecmaVersion: 2017,
+        sourceType: 'module',
+      },
+      parser: '@typescript-eslint/parser',
+      options: ['always'],
+    });
   });
 });
