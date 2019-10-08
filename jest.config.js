@@ -2,9 +2,7 @@ module.exports = {
   roots: [
     "<rootDir>"
   ],
-  transform: {
-    ".ts$": "ts-jest"
-  },
+  preset: "ts-jest",
   testMatch: [
     "**/tests/**/*.tests.ts"
   ],
