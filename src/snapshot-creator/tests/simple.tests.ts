@@ -22,20 +22,3 @@ describe('some', () => {
     console.log(snapshotCreator);
   });
 });
-
-
-// const code = "const a = 1";
-// const ruleConfig = {
-//   options: ["always"],
-// };
-// snapshotCreator
-//   .mark(code)
-//   .onRule(semi)
-//   .withConfig(ruleConfig)
-//   .toString();
-
-// snapshotCreator
-//   .fix(code)
-//   .onRule(semi)
-//   .withConfig(ruleConfig)
-//   .toString();
