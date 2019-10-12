@@ -1,7 +1,5 @@
-import { Linter, RuleTesterConfig } from '@typescript-eslint/experimental-utils/dist/ts-eslint'
+import { RuleTesterConfig } from '@typescript-eslint/experimental-utils/dist/ts-eslint'
 import { ErrorMarker } from './workers/error-marker';
-
-const linter = new Linter();
 
 export class SnapshotCreator {
   private readonly config: RuleTesterConfig;
