@@ -11,6 +11,7 @@ export abstract class BaseWorker<TOption extends readonly any[]> {
   protected filename?: string;
 
   public constructor(protected config: RuleTesterConfig, protected readonly code: string) {
+    // TODO Define the parser once only
     this.linter.defineParser(config.parser, require(config.parser));
   }
 
@@ -29,6 +30,7 @@ export abstract class BaseWorker<TOption extends readonly any[]> {
     this.filename = fileName;
   }
 
+  // TODO Define the rule once only
   public onRule(ruleName: string, rule: RuleModule<any, TOption, any>) {
     this.rule = rule;
     this.ruleName = ruleName;
