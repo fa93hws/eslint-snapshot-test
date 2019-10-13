@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when marking error to snapshot should generate the snapshot correctly for errors in multiple lines 1`] = `
+"
+
+var a = 1;
+    ~    ['a' is assigned a value but never used.]
+var b = 1;
+var c = 1;
+    ~    ['c' is assigned a value but never used.]
+fn(b);
+
+"
+`;
+
+exports[`when marking error to snapshot should generate the snapshot correctly for one line code 1`] = `
+"
+
+var a = 1;
+    ~    ['a' is assigned a value but never used.]
+
+"
+`;

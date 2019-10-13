@@ -1,5 +1,6 @@
 import { SnapshotCreator } from "../snapshot-creator";
-const semi = require('eslint/lib/rules/semi');
+import { EOL } from 'os';
+const noUnusedVar = require('eslint/lib/rules/no-unused-vars');
 
 describe('when marking error to snapshot', () => {
   const snapshotCreator = new SnapshotCreator({
@@ -9,14 +10,20 @@ describe('when marking error to snapshot', () => {
     },
     parser: '@typescript-eslint/parser',
   });
-  const code = 'const a = 1';
 
-  it('should generate the snapshot correctly', () => {
-    snapshotCreator.mark(code)
-    .onRule('semi', semi)
-    .withOptions(['error'])
+  it('should generate the snapshot correctly for one line code', () => {
+    const code = 'var a = 1;';
+    const result = snapshotCreator.mark(code)
+    .onRule('no-unused-var', noUnusedVar)
     .render();
+    expect(result).toMatchSnapshot();
+  });
 
-    expect(1).toBe(1);
+  it('should generate the snapshot correctly for errors in multiple lines', () => {
+    const code = `var a = 1;${EOL}var b = 1;${EOL}var c = 1;${EOL}fn(b);`;
+    const result = snapshotCreator.mark(code)
+    .onRule('no-unused-var', noUnusedVar)
+    .render();
+    expect(result).toMatchSnapshot();
   });
 });
