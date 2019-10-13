@@ -13,7 +13,7 @@ describe('when marking error to snapshot', () => {
 
   it('should generate the snapshot correctly', () => {
     snapshotCreator.mark(code)
-    .onRule(semi)
+    .onRule('semi', semi)
     .withOptions(['error'])
     .render();
 

@@ -5,6 +5,7 @@ type TestConfig<TOption extends readonly any[]> = Omit<ValidTestCase<TOption>, '
 
 export abstract class BaseWorker<TOption extends readonly any[]> {
   protected rule?: RuleModule<any, TOption, any>;
+  protected ruleName?: string;
   protected readonly linter: Linter = new Linter();
   protected ruleOption: TOption = [] as unknown as TOption;
   protected filename?: string;
@@ -27,8 +28,9 @@ export abstract class BaseWorker<TOption extends readonly any[]> {
     this.filename = fileName;
   }
 
-  public onRule(rule: RuleModule<any, TOption, any>) {
+  public onRule(ruleName: string, rule: RuleModule<any, TOption, any>) {
     this.rule = rule;
+    this.ruleName = ruleName;
     return this;
   }
 
