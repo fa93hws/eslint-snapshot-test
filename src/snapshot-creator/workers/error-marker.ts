@@ -15,7 +15,6 @@ export class ErrorMarker<TOption extends readonly any[]> extends BaseWorker<TOpt
       ...this.config,
       rules: { [ruleName]: ['error'] },
     });
-    console.log(lintResult);
     return this.markError(lintResult);
   }
 
@@ -49,9 +48,7 @@ export class ErrorMarker<TOption extends readonly any[]> extends BaseWorker<TOpt
   }
 
   static getWaveString(column: number, columnEnd: number) {
-    const leadingSpaces = column === 0
-      ? ''
-      : ' '.repeat(column - 1);
+    const leadingSpaces = ' '.repeat(column - 1);
     const waves = "~".repeat(columnEnd - column);
 
     return leadingSpaces + waves;
