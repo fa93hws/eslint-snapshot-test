@@ -4,6 +4,8 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es2020",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "composite": true,
+    "incremental": true
   }
 }

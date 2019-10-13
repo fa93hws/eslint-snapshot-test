@@ -9,7 +9,8 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "tsc --project tsconfig.build.json",
-    "test": "jest"
+    "test": "jest",
+    "lint:ts:types": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/eslint": "^6.1.2",
