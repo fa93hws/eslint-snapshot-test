@@ -7,6 +7,7 @@ describe('when marking error to snapshot', () => {
       ecmaVersion: 2017,
       sourceType: 'module',
     },
+    parser: '@typescript-eslint/parser',
   });
   const code = 'const a = 1';
 

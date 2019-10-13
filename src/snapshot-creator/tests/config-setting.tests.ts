@@ -7,6 +7,7 @@ describe.skip('when set the config', () => {
       ecmaVersion: 2017,
       sourceType: 'module',
     },
+    parser: '@typescript-eslint/parser',
   });
   const code = 'const a = 1';
   const options = ['always'];

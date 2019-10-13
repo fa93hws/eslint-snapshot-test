@@ -1,7 +1,7 @@
 import { merge } from 'lodash';
 import { RuleModule, ValidTestCase, RuleTesterConfig, Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint'
 
-type TestConfig<TOption extends readonly any[]> = Omit<ValidTestCase<TOption>, 'code' | 'options'> & RuleTesterConfig;
+type TestConfig<TOption extends readonly any[]> = Omit<ValidTestCase<TOption>, 'code' | 'options'> & Partial<RuleTesterConfig>;
 
 export abstract class BaseWorker<TOption extends readonly any[]> {
   protected rule?: RuleModule<any, TOption, any>;

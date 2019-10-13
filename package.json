@@ -12,19 +12,19 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@types/eslint": "^4.16.8",
+    "@types/eslint": "^6.1.2",
     "@types/jest": "^24.0.18",
     "@types/lodash": "^4.14.142",
     "@types/node": "^12.7.11",
     "@typescript-eslint/eslint-plugin": "^2.3.3",
-    "@typescript-eslint/experimental-utils": "^1.13.0",
+    "@typescript-eslint/experimental-utils": "^2.3.3",
     "@typescript-eslint/parser": "^2.3.3",
     "@typescript-eslint/typescript-estree": "^2.3.3",
     "eslint": "^6.5.1",
     "jest": "^24.8.0",
     "rimraf": "^2.6.3",
     "ts-jest": "^24.1.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.6.4"
   },
   "peerDependencies": {
     "eslint": ">6.0.0"
