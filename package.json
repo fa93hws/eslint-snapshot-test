@@ -9,7 +9,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "tsc --project tsconfig.build.json",
-    "test": "jest",
+    "test": "jest --ci",
     "lint:ts:types": "tsc --noEmit"
   },
   "devDependencies": {

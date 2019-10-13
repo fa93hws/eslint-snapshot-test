@@ -11,6 +11,7 @@ export abstract class BaseWorker<TOption extends readonly any[]> {
   protected filename?: string;
 
   public constructor(protected config: RuleTesterConfig, protected readonly code: string) {
+    this.linter.defineParser(config.parser, require(config.parser));
   }
 
   public withOptions(options: TOption) {
