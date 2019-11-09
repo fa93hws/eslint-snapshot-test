@@ -4,15 +4,21 @@ import { RuleModule, ValidTestCase, RuleTesterConfig, Linter } from '@typescript
 type TestConfig<TOption extends readonly any[]> = Omit<ValidTestCase<TOption>, 'code' | 'options'> & Partial<RuleTesterConfig>;
 
 export abstract class BaseWorker<TOption extends readonly any[]> {
-  protected rule?: RuleModule<any, TOption, any>;
   protected ruleName?: string;
-  protected readonly linter: Linter = new Linter();
   protected ruleOption: TOption = [] as unknown as TOption;
   protected filename?: string;
+  protected config: RuleTesterConfig;
+  protected readonly code: string;
+  protected readonly linter: Linter;
 
-  public constructor(protected config: RuleTesterConfig, protected readonly code: string) {
-    // TODO Define the parser once only
-    this.linter.defineParser(config.parser, require(config.parser));
+  public constructor({ config, code, linter }: {
+    config: RuleTesterConfig;
+    code: string;
+    linter: Linter;
+  }) {
+    this.config = config;
+    this.code = code;
+    this.linter = linter;
   }
 
   public withOptions(options: TOption) {
@@ -30,9 +36,8 @@ export abstract class BaseWorker<TOption extends readonly any[]> {
     this.filename = fileName;
   }
 
-  // TODO Define the rule once only
   public onRule(ruleName: string, rule: RuleModule<any, TOption, any>) {
-    this.rule = rule;
+    this.linter.defineRule(ruleName, rule);
     this.ruleName = ruleName;
     return this;
   }
