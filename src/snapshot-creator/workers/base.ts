@@ -1,44 +1,40 @@
 import { merge } from 'lodash';
-import { RuleModule, ValidTestCase, RuleTesterConfig, Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint'
+import { ValidTestCase, RuleTesterConfig, Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint'
 
-type TestConfig<TOption extends readonly any[]> = Omit<ValidTestCase<TOption>, 'code' | 'options'> & Partial<RuleTesterConfig>;
+type TestConfig<TOption extends readonly any[]> = Omit<ValidTestCase<TOption>, 'code' | 'options' | 'filename'> & Partial<RuleTesterConfig>;
 
 export abstract class BaseWorker<TOption extends readonly any[]> {
-  protected ruleName?: string;
-  protected ruleOption: TOption = [] as unknown as TOption;
+  protected ruleName: string;
+  protected ruleOption?: Linter.RuleLevelAndOptions;
   protected filename?: string;
   protected config: RuleTesterConfig;
   protected readonly code: string;
   protected readonly linter: Linter;
 
-  public constructor({ config, code, linter }: {
-    config: RuleTesterConfig;
+  public constructor({ config, code, linter, ruleName }: {
     code: string;
     linter: Linter;
+    ruleName: string;
+    config: RuleTesterConfig;
   }) {
-    this.config = config;
     this.code = code;
+    this.config = config;
     this.linter = linter;
+    this.ruleName = ruleName;
   }
 
-  public withOptions(options: TOption) {
-    this.ruleOption = options;
+  public withOptions(options: TOption, level: Linter.RuleLevel = 'error') {
+    this.ruleOption = [level, ...options];
     return this;
   }
 
   public overrideConfig(config: TestConfig<TOption>) {
     this.config = merge(this.config, config);
-    config.filename != null && (this.filename = config.filename);
     return this;
   }
 
   public withFileName(fileName: string) {
     this.filename = fileName;
-  }
-
-  public onRule(ruleName: string, rule: RuleModule<any, TOption, any>) {
-    this.linter.defineRule(ruleName, rule);
-    this.ruleName = ruleName;
     return this;
   }
 

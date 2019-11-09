@@ -4,14 +4,14 @@ import { EOL } from 'os';
 import { BaseWorker } from "./base";
 
 export class ErrorMarker<TOption extends readonly any[]> extends BaseWorker<TOption> {
-  // An EOL will be inserted at the beginning.
+  // EOL will be inserted at the first line
   private lineAdded: number = 1;
 
   render() {
     assertExist(this.ruleName, 'rule name must not be empty');
     const lintResult = this.linter.verify(this.code, {
       ...this.config,
-      rules: { [this.ruleName]: ['error'] },
+      rules: { [this.ruleName]: this.ruleOption ?? 'error' },
     });
     return this.markError(lintResult);
   }

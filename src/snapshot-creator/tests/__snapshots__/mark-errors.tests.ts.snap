@@ -21,3 +21,13 @@ var a = 1;
 
 "
 `;
+
+exports[`when marking error to snapshot should generate the snapshot correctly with rule option 1`] = `
+"
+
+a = 1;
+var b = 2;
+    ~    ['b' is assigned a value but never used.]
+
+"
+`;

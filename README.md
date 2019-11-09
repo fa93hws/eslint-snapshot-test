@@ -19,13 +19,13 @@ const ruleConfig = {
 };
 snapshotCreator
   .mark(code)
-  .onRule(semi)
-  .withConfig(ruleConfig)
+  .onRule('semi', semi)
+  .withOption(ruleConfig)
   .render();
 
 snapshotCreator
   .fix(code)
-  .onRule(semi)
-  .withConfig(ruleConfig)
+  .onRule('semi', semi)
+  .withOption(ruleConfig)
   .render();
 ```
