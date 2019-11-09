@@ -8,12 +8,10 @@ export class ErrorMarker<TOption extends readonly any[]> extends BaseWorker<TOpt
   private lineAdded: number = 1;
 
   render() {
-    const ruleName = assertExist(this.ruleName, 'rule name must not be empty');
-    const rule = assertExist(this.rule, 'rule must not be empty')
-    this.linter.defineRule(ruleName, rule);
+    assertExist(this.ruleName, 'rule name must not be empty');
     const lintResult = this.linter.verify(this.code, {
       ...this.config,
-      rules: { [ruleName]: ['error'] },
+      rules: { [this.ruleName]: ['error'] },
     });
     return this.markError(lintResult);
   }

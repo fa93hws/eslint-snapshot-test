@@ -1,24 +1,20 @@
 import { assertExist } from '../preconditions';
 
 describe('assertExist', () => {
-  it('return the value for 0', () => {
-    const zero = assertExist(0);
-    expect(zero).toEqual(0);
+  it('does not throw for 0', () => {
+    expect(() => assertExist(0)).not.toThrow();
   });
 
-  it('return the value for false', () => {
-    const negative = assertExist(false);
-    expect(negative).toEqual(false);
+  it('does not throw for false', () => {
+    expect(() => assertExist(false)).not.toThrow();
   });
 
-  it('return the value for empty object', () => {
-    const emptyObject = assertExist({});
-    expect(emptyObject).toEqual({});
+  it('does not throw for empty object', () => {
+    expect(() => assertExist({})).not.toThrow();
   });
 
-  it('return the value for empty array', () => {
-    const emptyArray = assertExist([]);
-    expect(emptyArray).toEqual([]);
+  it('does not throw for empty array', () => {
+    expect(() => assertExist([])).not.toThrow();
   });
 
   it('throws for the undefined', () => {

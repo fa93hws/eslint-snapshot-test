@@ -1,13 +1,17 @@
-import { RuleTesterConfig } from '@typescript-eslint/experimental-utils/dist/ts-eslint'
+import { RuleTesterConfig, Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint'
 import { ErrorMarker } from './workers/error-marker';
 
 export class SnapshotCreator {
-  private readonly config: RuleTesterConfig;
-  public constructor(config: RuleTesterConfig) {
-    this.config = config;
+  protected readonly linter: Linter = new Linter();
+  public constructor(private readonly config: RuleTesterConfig) {
+    this.linter.defineParser(config.parser, require(config.parser));
   }
 
   public mark<TOption extends readonly any[]>(code: string) {
-    return new ErrorMarker<TOption>(this.config, code);
+    return new ErrorMarker<TOption>({
+      linter: this.linter,
+      config: this.config,
+      code,
+    });
   }
 }
