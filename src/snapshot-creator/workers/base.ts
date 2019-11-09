@@ -1,11 +1,10 @@
-import { merge } from 'lodash';
 import { ValidTestCase, RuleTesterConfig, Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint'
 
 type TestConfig<TOption extends readonly any[]> = Omit<ValidTestCase<TOption>, 'code' | 'options' | 'filename'> & Partial<RuleTesterConfig>;
 
 export abstract class BaseWorker<TOption extends readonly any[]> {
   protected ruleName: string;
-  protected ruleOption?: Linter.RuleLevelAndOptions;
+  protected ruleOption: Linter.RuleLevelAndOptions = ['error'];
   protected filename?: string;
   protected config: RuleTesterConfig;
   protected readonly code: string;
@@ -23,8 +22,8 @@ export abstract class BaseWorker<TOption extends readonly any[]> {
     this.ruleName = ruleName;
   }
 
-  public withOptions(options: TOption, level: Linter.RuleLevel = 'error') {
-    this.ruleOption = [level, ...options];
+  public withOptions(options: TOption) {
+    this.ruleOption = ['error', ...options];
     return this;
   }
 

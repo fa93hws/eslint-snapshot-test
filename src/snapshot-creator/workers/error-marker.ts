@@ -11,20 +11,21 @@ export class ErrorMarker<TOption extends readonly any[]> extends BaseWorker<TOpt
     assertExist(this.ruleName, 'rule name must not be empty');
     const lintResult = this.linter.verify(this.code, {
       ...this.config,
-      rules: { [this.ruleName]: this.ruleOption ?? 'error' },
+      rules: { [this.ruleName]: this.ruleOption },
     });
     return this.markError(lintResult);
   }
 
-  private getPosition(result: Linter.LintMessage) {
+  private static getPosition(result: Linter.LintMessage) {
     return {
       line: {
         start: result.line,
         end: result.endLine,
       },
       column: {
-        start: result.column,
-        end: result.endColumn,
+        // column start with 1 in eslint
+        start: result.column - 1,
+        end: result.endColumn ? result.endColumn - 1 : result.endColumn,
       },
     };
   }
@@ -32,9 +33,9 @@ export class ErrorMarker<TOption extends readonly any[]> extends BaseWorker<TOpt
   private markError(lintResults: Linter.LintMessage[]) {
     const codeLines = [EOL, ...this.code.split(EOL), EOL];
     lintResults.forEach(lintResult => {
-      const position = this.getPosition(lintResult);
+      const position = ErrorMarker.getPosition(lintResult);
       const startLine = position.line.start + this.lineAdded;
-      const columnEnd = position.column.end || codeLines[startLine - 1].length;
+      const columnEnd = position.column.end ?? codeLines[startLine - 1].length;
       const waveString = ErrorMarker.getWaveString(position.column.start, columnEnd);
       const { message } = lintResult;
       const newLine = `${waveString}    [${message}]`;
@@ -45,9 +46,10 @@ export class ErrorMarker<TOption extends readonly any[]> extends BaseWorker<TOpt
     return codeLines.join(EOL);
   }
 
-  static getWaveString(column: number, columnEnd: number) {
-    const leadingSpaces = ' '.repeat(column - 1);
-    const waves = "~".repeat(columnEnd - column);
+  private static getWaveString(column: number, columnEnd: number) {
+    const leadingSpaces = ' '.repeat(column);
+    const waveLength = Math.max((columnEnd - column), 1)
+    const waves = "~".repeat(waveLength);
 
     return leadingSpaces + waves;
   }
