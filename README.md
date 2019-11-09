@@ -13,19 +13,15 @@ const eslintOptions = {
 const snapshotCreator = new SnapshotCreator(eslintOptions);
 
 const code = "const a = 1";
-const ruleConfig = {
-  options: ["always"],
-  filename: string,
-};
+
 snapshotCreator
   .mark(code)
-  .onRule(semi)
-  .withConfig(ruleConfig)
+  .onRule('semi', semi)
   .render();
 
 snapshotCreator
-  .fix(code)
-  .onRule(semi)
-  .withConfig(ruleConfig)
+  .mark(code)
+  .onRule('semi', semi)
+  .withOptions(["always"], "warn")
   .render();
 ```
