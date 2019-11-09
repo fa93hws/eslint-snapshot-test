@@ -1,6 +1,7 @@
 import { SnapshotCreator } from "../snapshot-creator";
 import { EOL } from 'os';
 const noUnusedVar = require('eslint/lib/rules/no-unused-vars');
+const semi = require('eslint/lib/rules/semi');
 
 describe('when marking error to snapshot', () => {
   const snapshotCreator = new SnapshotCreator({
@@ -29,9 +30,17 @@ describe('when marking error to snapshot', () => {
   });
 
   it('should generate the snapshot correctly for errors in multiple lines', () => {
-    const code = `var a = 1;${EOL}var b = 1;${EOL}var c = 1;${EOL}fn(b);`;
+    const code = `var a = 1;${EOL}var b = 1;${EOL}var foo = 1;${EOL}fn(b);`;
     const result = snapshotCreator
       .mark({ code, ruleName: 'no-unused-var', rule: noUnusedVar })
+      .render();
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should generate the snapshot correctly for errors at last column', () => {
+    const code = `var a = 1`;
+    const result = snapshotCreator
+      .mark({ code, ruleName: 'semi', rule: semi })
       .render();
     expect(result).toMatchSnapshot();
   });
