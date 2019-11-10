@@ -1,3 +1,4 @@
+import merge = require('lodash.merge');
 import { ValidTestCase, RuleTesterConfig, Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint'
 
 type TestConfig<TOption extends readonly any[]> = Omit<ValidTestCase<TOption>, 'code' | 'options' | 'filename'> & Partial<RuleTesterConfig>;
@@ -27,10 +28,10 @@ export abstract class BaseWorker<TOption extends readonly any[]> {
     return this;
   }
 
-  // public overrideConfig(config: TestConfig<TOption>) {
-  //   this.config = merge(this.config, config);
-  //   return this;
-  // }
+  public overrideConfig(config: TestConfig<TOption>) {
+    this.config = merge(this.config, config);
+    return this;
+  }
 
   public withFileName(fileName: string) {
     this.filename = fileName;
