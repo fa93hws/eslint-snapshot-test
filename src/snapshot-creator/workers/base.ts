@@ -32,10 +32,10 @@ export abstract class BaseWorker<TOption extends readonly any[]> {
   //   return this;
   // }
 
-  // public withFileName(fileName: string) {
-  //   this.filename = fileName;
-  //   return this;
-  // }
+  public withFileName(fileName: string) {
+    this.filename = fileName;
+    return this;
+  }
 
   abstract render(): string;
 }

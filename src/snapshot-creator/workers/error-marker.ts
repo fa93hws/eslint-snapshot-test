@@ -12,6 +12,8 @@ export class ErrorMarker<TOption extends readonly any[]> extends BaseWorker<TOpt
     const lintResult = this.linter.verify(this.code, {
       ...this.config,
       rules: { [this.ruleName]: this.ruleOption },
+    }, {
+      filename: this.filename,
     });
     return this.markError(lintResult);
   }
