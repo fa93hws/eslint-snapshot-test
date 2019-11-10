@@ -16,4 +16,13 @@ describe('when providing configs', () => {
       .render();
     expect(gotFilename).toEqual(wantFileName);
   });
+
+  it('get empty string if the filename is not provided', () => {
+    let gotFilename: string = '';
+    const rule = createAssertConfigRule(context => gotFilename = context.getFilename());
+    snapshotCreator
+      .mark({ code: '', ruleName: 'assert-filename', rule })
+      .render();
+    expect(gotFilename).toEqual('');
+  });
 });
