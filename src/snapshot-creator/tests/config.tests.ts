@@ -3,10 +3,6 @@ import { createAssertConfigRule } from "../../utils/testing-rules/assert-config"
 
 describe('when providing configs', () => {
   const snapshotCreator = new SnapshotCreator({
-    parserOptions: {
-      ecmaVersion: 2017,
-      sourceType: 'module',
-    },
     parser: '@typescript-eslint/parser',
   });
 
