@@ -12,7 +12,7 @@ describe('when marking error to snapshot', () => {
     parser: '@typescript-eslint/parser',
   });
 
-  it('should generate the snapshot correctly for one line code', () => {
+  it('generates snapshot for one line code', () => {
     const code = 'var a = 1;';
     const result = snapshotCreator
       .mark({ code, ruleName: 'no-unused-var', rule: noUnusedVar })
@@ -20,7 +20,7 @@ describe('when marking error to snapshot', () => {
     expect(result).toMatchSnapshot();
   });
 
-  it('should generate the snapshot correctly with rule option', () => {
+  it('generates snapshot with rule option', () => {
     const code = `a = 1;${EOL}var b = 2;`;
     const result = snapshotCreator
       .mark({ code, ruleName: 'no-unused-var', rule: noUnusedVar })
@@ -29,7 +29,7 @@ describe('when marking error to snapshot', () => {
     expect(result).toMatchSnapshot();
   });
 
-  it('should generate the snapshot correctly for errors in multiple lines', () => {
+  it('generates snapshot for multiple one line error', () => {
     const code = `var a = 1;${EOL}var b = 1;${EOL}var foo = 1;${EOL}fn(b);`;
     const result = snapshotCreator
       .mark({ code, ruleName: 'no-unused-var', rule: noUnusedVar })
@@ -37,7 +37,7 @@ describe('when marking error to snapshot', () => {
     expect(result).toMatchSnapshot();
   });
 
-  it('should generate the snapshot correctly for errors at last column', () => {
+  it('generates snapshot for the error at last column', () => {
     const code = `var a = 1`;
     const result = snapshotCreator
       .mark({ code, ruleName: 'semi', rule: semi })
