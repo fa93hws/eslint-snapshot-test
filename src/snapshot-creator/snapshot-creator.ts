@@ -15,6 +15,7 @@ export class SnapshotCreator {
     if (!this.linter.getRules().has(ruleName)) {
       this.linter.defineRule(ruleName, rule);
     }
+
     return new ErrorMarker<TOption>({
       code,
       ruleName,
