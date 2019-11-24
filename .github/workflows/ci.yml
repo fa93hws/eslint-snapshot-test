@@ -1,0 +1,20 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: install dependencies
+        run: yarn
+      - name: Run eslint
+        run: yarn lint
+      - name: Check types
+        run: yarn lint:types
+      - name: Check prettiers
+        run: yarn prettier
+      - name: Run unit tests
+        run: yarn test
