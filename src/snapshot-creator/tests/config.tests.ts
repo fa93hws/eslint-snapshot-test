@@ -3,9 +3,9 @@ import { createAssertConfigRule } from "../../utils/testing-rules/assert-config"
 
 describe('when providing configs', () => {
   const parserOptions = {
-    ecmaVersion: 2017 as 2017,
-    sourceType: 'module' as 'module',
-  };
+    ecmaVersion: 2017,
+    sourceType: 'module',
+  } as const;
   const code = '';
   const ruleName = 'ruleName';
 

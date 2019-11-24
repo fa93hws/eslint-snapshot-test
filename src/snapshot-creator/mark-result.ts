@@ -1,4 +1,4 @@
-import { Linter } from "eslint";
+import { Linter } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
 import { PositionHelper } from './position-helper';
 
 export type MarkedLine = {

@@ -1,4 +1,4 @@
-import { Linter } from 'eslint';
+import { Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
 import { assertExist } from '../../utils/preconditions';
 import { EOL } from 'os';
 import { BaseWorker } from "./base";
