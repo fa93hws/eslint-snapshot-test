@@ -27,30 +27,10 @@ jobs:
           key: eslintcache-${{ hashFiles('yarn.lock')}}
           restore-keys: eslintcache-
       - name: Check ESLint
-        run: yarn lint --cache --cache-location "cache/eslint.json"
+        run: yarn lint:cache
       - name: Check Typescript Types
-        run: yarn lint:ts --incremental --tsBuildInfoFile "cache/ts.jsn"
-  # types:
-  #   name: Check Typescript types
-  #   needs: install-deps
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v1
-  #     - name: Check Typescript types
-  #       run: yarn lint:types
-  # format:
-  #   name: Check code format
-  #   needs: install-deps
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v1
-  #     - name: Run prettier
-  #       run: yarn prettier
-  # unit-tests:
-  #   name: Run unit tests
-  #   needs: install-deps
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v1
-  #     - name: Run unit tests
-  #       run: yarn test
+        run: yarn lint:types:cache
+      - name: Check code style
+        run: yarn format:prettier
+      - name: Run unit test
+        run: yarn test

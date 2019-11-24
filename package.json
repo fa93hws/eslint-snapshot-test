@@ -7,12 +7,15 @@
   "author": "wjun0912@gmail.com",
   "license": "MIT",
   "scripts": {
-    "clean": "rimraf dist",
+    "clean:build": "rimraf dist",
+    "clean:cache": "rimraf cache",
     "build": "tsc --project tsconfig.build.json",
     "test": "jest --ci",
     "lint": "eslint 'src/**/*.ts{,x}'",
+    "lint:cache": "yarn lint--cache --cache-location 'cache/eslint.json'",
     "lint:types": "tsc",
-    "prettier": "prettier --check 'src/**/*.ts{,x}'"
+    "lint:types:cache": "yarn lint:types --incremental --tsBuildInfoFile 'cache/ts-check.json'",
+    "format:prettier": "prettier --check 'src/**/*.ts{,x}'"
   },
   "devDependencies": {
     "@types/jest": "^24.0.22",
