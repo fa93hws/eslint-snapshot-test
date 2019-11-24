@@ -1,4 +1,4 @@
-![](https://github.com/fa93hws/eslint-snapshot-test/workflows/.github/workflows/ci.yml/badge.svg)
+![](https://github.com/fa93hws/eslint-snapshot-test/workflows/CI/badge.svg)
 
 # How to use
 

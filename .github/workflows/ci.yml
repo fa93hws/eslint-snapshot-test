@@ -6,8 +6,8 @@ on:
       - '**.md'
 
 jobs:
-  build:
-    name: build
+  linting-test:
+    name: Linting and test
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -42,3 +42,24 @@ jobs:
         run: yarn test
       - name: Check Typescript Types
         run: yarn lint:types:cache
+
+  build:
+    needs: linting-test
+    name: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Find Yarn Cache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: ${{ runner.OS }}-yarn-
+      - name: Run yarn
+        run: yarn
+      - name: Build typescript
+        run: yarn build
