@@ -34,3 +34,7 @@ jobs:
         run: yarn test
       - name: Check Typescript Types
         run: yarn lint:types:cache
+      - name: Build Typescript
+        run: yarn build
+      - name: Publish
+        run: npm publish
