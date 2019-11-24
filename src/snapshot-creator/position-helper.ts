@@ -1,5 +1,4 @@
-import { Linter } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
-import { EOL } from "os";
+import { Linter } from "eslint";
 
 export type Position = {
   line: {
@@ -13,9 +12,7 @@ export type Position = {
 }
 
 export class PositionHelper {
-  private readonly lines: string[];
-  public constructor(code: string) {
-    this.lines = code.split(EOL);
+  public constructor(private readonly lines: readonly string[]) {
   }
 
   public static getPosition(result: Linter.LintMessage): Position {
