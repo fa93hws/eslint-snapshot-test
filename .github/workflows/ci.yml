@@ -18,9 +18,9 @@ jobs:
           path: node_modules
           key: yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: yarn-
+      - name: Run yarn
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Run yarn
         run: yarn
       - name: Find linting & testing Cache
         uses: actions/cache@v1
@@ -39,6 +39,6 @@ jobs:
       - name: Build Typescript
         run: yarn build
       - name: Publish
-        run: npm publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish
