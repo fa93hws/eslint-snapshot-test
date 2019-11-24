@@ -1,6 +1,6 @@
 {
   "name": "eslint-snapshot-test",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Provide snapshot test for eslint rule",
   "main": "dist/index.js",
   "repository": "https://github.com/fa93hws/eslint-snapshot-test.git",
@@ -41,5 +41,9 @@
   },
   "dependencies": {
     "lodash.merge": "^4.6.2"
-  }
+  },
+  "keywords": [
+    "eslint",
+    "snapshot-test"
+  ]
 }
