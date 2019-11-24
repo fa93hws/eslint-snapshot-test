@@ -1,5 +1,6 @@
 {
   "extends": "./tsconfig.json",
   "declaration": true,
-  "exclude": ["**/tests/**"]
+  "exclude": ["**/tests/**"],
+  "outDir": "dist"
 }

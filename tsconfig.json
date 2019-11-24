@@ -4,10 +4,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es2020",
-    "baseUrl": "./",
-    "outDir": "dist",
-    "composite": true,
-    "incremental": true,
+    "baseUrl": ".",
     "allowSyntheticDefaultImports": true
   }
 }
