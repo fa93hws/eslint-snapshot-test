@@ -18,6 +18,8 @@ jobs:
           path: node_modules
           key: yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: yarn-
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Run yarn
         run: yarn
       - name: Find linting & testing Cache
@@ -38,3 +40,5 @@ jobs:
         run: yarn build
       - name: Publish
         run: npm publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
