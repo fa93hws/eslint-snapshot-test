@@ -21,7 +21,10 @@ export class ErrorWorker<TOption extends readonly any[]> extends BaseWorker<
       lintResult,
       positionHelper: this.positionHelper,
     });
-    return this.markError(markedResult);
+    return {
+      numErrors: lintResult.length,
+      snapshot: this.markError(markedResult),
+    };
   }
 
   private markError(markedResult: readonly MarkedLine[]) {

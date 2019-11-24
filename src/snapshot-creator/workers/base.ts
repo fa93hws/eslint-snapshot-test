@@ -16,6 +16,11 @@ type TestConfig<TOption extends readonly any[]> = Omit<
 > &
   Partial<RuleTesterConfig>;
 
+export type RenderResult = {
+  snapshot: string;
+  numErrors: number;
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export abstract class BaseWorker<TOption extends readonly any[]> {
   private _codeLines?: readonly string[];
@@ -81,5 +86,5 @@ export abstract class BaseWorker<TOption extends readonly any[]> {
     return this;
   }
 
-  abstract render(): string;
+  abstract render(): RenderResult;
 }

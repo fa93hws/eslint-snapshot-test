@@ -15,21 +15,21 @@ const snapshotCreator = new SnapshotCreator(eslintOptions);
 
 const code = "const a = 1";
 
-snapshotCreator
+const { snapshot } = snapshotCreator
   .mark({ code, ruleName: 'semi', rule: semi })
   .render();
 
-snapshotCreator
+const { snapshot } = snapshotCreator
   .mark({ code, ruleName: 'semi', rule: semi })
   .withOptions(["always"], "warn")
   .render();
 
-snapshotCreator
+const { snapshot } = snapshotCreator
   .mark({ code, ruleName: 'semi', rule: semi })
   .overrideConfig({ settings: { foo: 'foo' } })
   .render();
 
-snapshotCreator
+const { snapshot } = snapshotCreator
   .mark({ code, ruleName: 'semi', rule: semi })
   .withFileName('filename.ts')
   .render();
