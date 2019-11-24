@@ -24,7 +24,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: cache
-          key: eslintcache-${{ hashFiles('yarn.lock')}}
+          key: lintingcache-${{ hashFiles('yarn.lock')}}
           restore-keys: eslintcache-
       - name: Check ESLint
         run: yarn lint:cache
