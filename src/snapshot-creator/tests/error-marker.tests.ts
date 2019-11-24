@@ -61,7 +61,7 @@ describe('when marking error to snapshot', () => {
       '}',
     ].join(EOL);
     const { snapshot, numErrors } = snapshotCreator
-      .mark({ code, ruleName: 'no-else', rule: noElseReturn })
+      .mark({ code, ruleName: 'no-elses', rule: noElseReturn })
       .render();
     expect(numErrors).toEqual(1);
     expect(snapshot).toMatchSnapshot();
