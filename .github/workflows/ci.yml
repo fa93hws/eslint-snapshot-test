@@ -6,8 +6,8 @@ on:
       - '**.md'
 
 jobs:
-  linting-test:
-    name: Linting and tests
+  build:
+    name: build
     runs-on: ubuntu-latest
 
     steps:
@@ -28,9 +28,9 @@ jobs:
           restore-keys: eslintcache-
       - name: Check ESLint
         run: yarn lint:cache
-      - name: Check Typescript Types
-        run: yarn lint:types:cache
       - name: Check code style
         run: yarn format:prettier
       - name: Run unit test
         run: yarn test
+      - name: Check Typescript Types
+        run: yarn lint:types:cache
