@@ -22,13 +22,17 @@ describe('ResultMarker', () => {
   });
 
   it('finds the one line error without column end', () => {
-    const lintResult: Linter.LintMessage[] = [createLintMessage({ line: 1, column: 3 })];
+    const lintResult: Linter.LintMessage[] = [
+      createLintMessage({ line: 1, column: 3 }),
+    ];
     const code = 'There is an error!';
     const positionHelper = new PositionHelper([code]);
     const markedResult = markResult({ lintResult, positionHelper });
-    expect(markedResult).toEqual([{
-      afterLine: 0,
-      text: '  ~~~~~~~~~~~~~~~~    [message]',
-    }]);
+    expect(markedResult).toEqual([
+      {
+        afterLine: 0,
+        text: '  ~~~~~~~~~~~~~~~~    [message]',
+      },
+    ]);
   });
 });

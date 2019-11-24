@@ -9,11 +9,10 @@ export type Position = {
     start: number;
     end: number | undefined;
   };
-}
+};
 
 export class PositionHelper {
-  public constructor(private readonly lines: readonly string[]) {
-  }
+  public constructor(private readonly lines: readonly string[]) {}
 
   public static getPosition(result: Linter.LintMessage): Position {
     return {

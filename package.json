@@ -10,8 +10,9 @@
     "clean": "rimraf dist",
     "build": "tsc --project tsconfig.build.json",
     "test": "jest --ci",
-    "lint": "eslint  \"src/**/*.ts{,x}\"",
-    "lint:types": "tsc --noEmit"
+    "lint": "eslint 'src/**/*.ts{,x}'",
+    "lint:types": "tsc --noEmit",
+    "prettier": "prettier --check 'src/**/*.ts{,x}'"
   },
   "devDependencies": {
     "@types/jest": "^24.0.22",
@@ -23,9 +24,11 @@
     "@typescript-eslint/typescript-estree": "^2.8.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^23.0.4",
     "jest": "^24.9.0",
+    "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
     "ts-jest": "^24.1.0",
     "typescript": "^3.7.2"
