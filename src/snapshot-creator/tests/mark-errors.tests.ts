@@ -1,6 +1,9 @@
-import { SnapshotCreator } from "../snapshot-creator";
 import { EOL } from 'os';
+import { SnapshotCreator } from '../snapshot-creator';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const noUnusedVar = require('eslint/lib/rules/no-unused-vars');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const semi = require('eslint/lib/rules/semi');
 
 describe('when marking error to snapshot', () => {
@@ -38,7 +41,7 @@ describe('when marking error to snapshot', () => {
   });
 
   it('generates snapshot for the error at last column', () => {
-    const code = `var a = 1`;
+    const code = 'var a = 1';
     const result = snapshotCreator
       .mark({ code, ruleName: 'semi', rule: semi })
       .render();

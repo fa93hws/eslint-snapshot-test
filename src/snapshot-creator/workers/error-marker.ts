@@ -1,8 +1,9 @@
 import { Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
-import { assertExist } from '../../utils/preconditions';
 import { EOL } from 'os';
-import { BaseWorker } from "./base";
+import { assertExist } from '../../utils/preconditions';
+import { BaseWorker } from './base';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class ErrorWorker<TOption extends readonly any[]> extends BaseWorker<TOption> {
   render() {
     assertExist(this.ruleName, 'rule name must not be empty');
@@ -21,11 +22,11 @@ export class ErrorWorker<TOption extends readonly any[]> extends BaseWorker<TOpt
 
     const markedCodes = [''];
     let markedIterIdx = 0;
-    for (let i = 0; i < this.codeLines.length; i++) {
+    for (let i = 0; i < this.codeLines.length; i += 1) {
       markedCodes.push(this.codeLines[i]);
       if (markedIterIdx < resultMarker.length && i === resultMarker[markedIterIdx].afterLine) {
         markedCodes.push(resultMarker[markedIterIdx].text);
-        markedIterIdx++;
+        markedIterIdx += 1;
       }
     }
     return markedCodes.join(EOL);

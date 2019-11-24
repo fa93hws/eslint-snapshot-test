@@ -1,8 +1,8 @@
 export function assertExist<T>(
   para: T | undefined | null,
-  message: string = 'parameter must exist',
+  message = 'parameter must exist',
 ): asserts para is T {
   if (para == null) {
-    throw new Error(message)
+    throw new Error(message);
   }
 }
