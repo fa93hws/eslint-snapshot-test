@@ -5,7 +5,7 @@ type MessageIds = 'config';
 type Option = [];
 export const name = 'assert-config';
 const messages: Record<MessageIds, string> = {
-  config: "no error msg for this rule",
+  config: 'no error msg for this rule',
 };
 
 export function createAssertConfigRule(callback: (context: RuleContext<'config', []>) => void) {

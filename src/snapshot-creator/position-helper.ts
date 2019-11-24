@@ -1,14 +1,14 @@
-import { Linter } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
+import { Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
 
 export type Position = {
   line: {
     start: number;
     end: number | undefined;
-  },
+  };
   column: {
     start: number;
     end: number | undefined;
-  }
+  };
 }
 
 export class PositionHelper {

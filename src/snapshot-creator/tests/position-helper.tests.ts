@@ -1,8 +1,9 @@
-import { PositionHelper, Position } from '../position-helper';
 import { Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
-import { EOL } from 'os';
+import { PositionHelper, Position } from '../position-helper';
 
-function createLintResult({ column, line, endColumn, endLine }: {
+function createLintResult({
+  column, line, endColumn, endLine,
+}: {
   line: number;
   column: number;
   endLine?: number;
@@ -24,7 +25,9 @@ function createLintResult({ column, line, endColumn, endLine }: {
 describe('PositionHelper', () => {
   describe('getPosition', () => {
     it('offsets the line and column by -1', () => {
-      const result = createLintResult({ column: 2, line: 3, endColumn: 4, endLine: 5 });
+      const result = createLintResult({
+        column: 2, line: 3, endColumn: 4, endLine: 5,
+      });
       const position = PositionHelper.getPosition(result);
       expect(position).toEqual(expect.objectContaining({
         line: { start: 2, end: 4 },
@@ -37,7 +40,7 @@ describe('PositionHelper', () => {
     const positionHelper = new PositionHelper([
       'a'.repeat(5),
       'a'.repeat(7),
-      'a'.repeat(9)
+      'a'.repeat(9),
     ]);
 
     it('return the start and end if both are given', () => {
