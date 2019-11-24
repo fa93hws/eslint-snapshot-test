@@ -1,20 +1,36 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    paths-ignore:
+      - '**.md'
 
 jobs:
-  build:
+  linting-test:
+    name: Linting and tests
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
-      - name: install dependencies
+      - name: Find Yarn Cache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: yarn-
+      - name: Run yarn
         run: yarn
-      - name: Run eslint
-        run: yarn lint
-      - name: Check types
-        run: yarn lint:types
-      - name: Check prettiers
-        run: yarn prettier
-      - name: Run unit tests
+      - name: Find linting & testing Cache
+        uses: actions/cache@v1
+        with:
+          path: cache
+          key: eslintcache-${{ hashFiles('yarn.lock')}}
+          restore-keys: eslintcache-
+      - name: Check ESLint
+        run: yarn lint:cache
+      - name: Check Typescript Types
+        run: yarn lint:types:cache
+      - name: Check code style
+        run: yarn format:prettier
+      - name: Run unit test
         run: yarn test
