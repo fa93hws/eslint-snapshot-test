@@ -41,10 +41,15 @@ jobs:
     needs: install-deps
     runs-on: ubuntu-latest
 
+    steps:
+      - name: Run prettier
+        run: yarn prettier
+
   unit-tests:
     name: Run unit tests
     needs: install-deps
     runs-on: ubuntu-latest
+
     steps:
       - name: Run unit tests
         run: yarn test
