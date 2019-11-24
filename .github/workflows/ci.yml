@@ -20,28 +20,16 @@ jobs:
           restore-keys: yarn-
       - name: Run yarn
         run: yarn
-
-  lint:
-    name: Run ESlint
-    needs: install-deps
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v1
-      - name: Find Yarn Cache
+      - name: Find linting & testing Cache
         uses: actions/cache@v1
         with:
-          path: node_modules
-          key: yarn-${{ hashFiles('yarn.lock') }}
-          restore-keys: yarn-
-      - name: Find Eslint Cache
-        uses: actions/cache@v1
-        with:
-          path: eslintcache.json
+          path: cache
           key: eslintcache-${{ hashFiles('yarn.lock')}}
           restore-keys: eslintcache-
-      - name: Run eslint
-        run: yarn lint --cache --cache-location "eslintcache.json"
+      - name: Check ESLint
+        run: yarn lint --cache --cache-location "cache/eslint.json"
+      - name: Check Typescript Types
+        run: yarn lint:ts --incremental --tsBuildInfoFile "cache/ts.jsn"
   # types:
   #   name: Check Typescript types
   #   needs: install-deps

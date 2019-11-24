@@ -11,7 +11,7 @@
     "build": "tsc --project tsconfig.build.json",
     "test": "jest --ci",
     "lint": "eslint 'src/**/*.ts{,x}'",
-    "lint:types": "tsc --noEmit",
+    "lint:types": "tsc",
     "prettier": "prettier --check 'src/**/*.ts{,x}'"
   },
   "devDependencies": {
