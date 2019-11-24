@@ -5,9 +5,6 @@
     "moduleResolution": "node",
     "target": "es2020",
     "baseUrl": ".",
-    "outDir": "dist",
-    "incremental": true,
-    "tsBuildInfoFile": "cache/ts-check.json",
     "allowSyntheticDefaultImports": true
   }
 }
