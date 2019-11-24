@@ -1,6 +1,12 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
 
 jobs:
   install-deps:
@@ -9,7 +15,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Find Cache
+      - name: Find Yarn Cache
         uses: actions/cache@v1
         with:
           path: node_modules
@@ -25,35 +31,41 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+      - name: Find Yarn Cache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: yarn-
+      - name: Find Eslint Cache
+        uses: actions/cache@v1
+        with:
+          path: eslintcache.json
+          key: eslintcache-${{ hashFiles('yarn.lock')}}
+          restore-keys: eslintcache-
       - name: Run eslint
         run: yarn lint
-
-  types:
-    name: Check Typescript types
-    needs: install-deps
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v1
-      - name: Check Typescript types
-        run: yarn lint:types
-
-  format:
-    name: Check code format
-    needs: install-deps
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v1
-      - name: Run prettier
-        run: yarn prettier
-
-  unit-tests:
-    name: Run unit tests
-    needs: install-deps
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v1
-      - name: Run unit tests
-        run: yarn test
+  # types:
+  #   name: Check Typescript types
+  #   needs: install-deps
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - name: Check Typescript types
+  #       run: yarn lint:types
+  # format:
+  #   name: Check code format
+  #   needs: install-deps
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - name: Run prettier
+  #       run: yarn prettier
+  # unit-tests:
+  #   name: Run unit tests
+  #   needs: install-deps
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - name: Run unit tests
+  #       run: yarn test
