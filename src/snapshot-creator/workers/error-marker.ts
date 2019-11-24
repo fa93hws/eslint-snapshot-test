@@ -22,7 +22,7 @@ export class ErrorWorker<TOption extends readonly any[]> extends BaseWorker<
       positionHelper: this.positionHelper,
     });
     return {
-      numErrors: lintResult.length,
+      lintMessages: lintResult,
       snapshot: this.markError(markedResult),
     };
   }
