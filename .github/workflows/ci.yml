@@ -6,8 +6,8 @@ on:
       - '**.md'
 
 jobs:
-  install-deps:
-    name: Install node modules
+  linting-test:
+    name: Linting and tests
     runs-on: ubuntu-latest
 
     steps:
