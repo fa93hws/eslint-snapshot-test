@@ -4,30 +4,36 @@ on:
   push:
     paths-ignore:
       - '**.md'
-  release:
-    types: [published, created, edited]
 
 jobs:
   build:
     name: build
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node: [10, 12, 13]
 
     steps:
       - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
       - name: Find Yarn Cache
         uses: actions/cache@v1
         with:
           path: node_modules
-          key: yarn-${{ hashFiles('yarn.lock') }}
-          restore-keys: yarn-
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: ${{ runner.OS }}-yarn-
       - name: Run yarn
         run: yarn
       - name: Find linting & testing Cache
         uses: actions/cache@v1
         with:
           path: cache
-          key: lintingcache-${{ hashFiles('yarn.lock')}}
-          restore-keys: lintingcache-
+          key: ${{ runner.OS }}-lintingcache-${{ hashFiles('yarn.lock')}}
+          restore-keys: ${{ runner.OS }}-lintingcache-
       - name: Check ESLint
         run: yarn lint:cache
       - name: Check code style
@@ -36,13 +42,3 @@ jobs:
         run: yarn test
       - name: Check Typescript Types
         run: yarn lint:types:cache
-      - name: Build Typescript
-        run: yarn build
-        if: github.event_name == 'release'
-      - name: Publish
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        if: github.event_name == 'release'
-        run: |
-          npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
-          npm publish
