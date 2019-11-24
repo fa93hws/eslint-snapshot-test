@@ -6,6 +6,7 @@
     "target": "es2020",
     "baseUrl": "./",
     "composite": true,
-    "incremental": true
+    "incremental": true,
+    "allowSyntheticDefaultImports": true
   }
 }
