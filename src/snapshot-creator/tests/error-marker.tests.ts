@@ -19,7 +19,7 @@ describe('when marking error to snapshot', () => {
   it('generates snapshot for one line code', () => {
     const code = 'var a = 1;';
     const { snapshot } = snapshotCreator
-      .mark({ code, ruleName: 'no-unused-var', rule: noUnusedVar })
+      .mark({ code, ruleName: 'no-unu-sed-var', rule: noUnusedVar })
       .render();
     expect(snapshot).toMatchSnapshot();
   });
