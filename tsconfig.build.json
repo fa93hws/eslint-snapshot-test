@@ -1,5 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "declaration": true,
+  "compilerOptions": {
+    "incremental": false,
+    "tsBuildInfoFile": null
+  },
   "exclude": ["**/tests/**"]
 }
