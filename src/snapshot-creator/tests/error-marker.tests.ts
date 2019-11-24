@@ -51,13 +51,15 @@ describe('when marking error to snapshot', () => {
   });
 
   it('generates snapshot for multiple lines error', () => {
-    const code = `function test(a) {
-  if (a) {
-    return 2;
-  } else {
-    return 3;
-  }
-}`;
+    const code = [
+      'function test(a) {',
+      '  if (a) {',
+      '    return 2;',
+      '  } else {',
+      '    return 3;',
+      '  }',
+      '}',
+    ].join(EOL);
     const { snapshot, numErrors } = snapshotCreator
       .mark({ code, ruleName: 'no-else', rule: noElseReturn })
       .render();
