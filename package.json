@@ -12,11 +12,11 @@
     "clean:cache": "rimraf cache",
     "build": "yarn clean:build && tsc --project tsconfig.build.json",
     "test": "jest --ci",
-    "lint": "eslint 'src/**/*.ts'",
-    "lint:cache": "yarn lint --cache --cache-location 'cache/eslint.json'",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:cache": "yarn lint --cache --cache-location \"cache/eslint.json\"",
     "lint:types": "tsc --project tsconfig.check.json",
     "lint:types:cache": "yarn lint:types",
-    "format:prettier": "prettier --check 'src/**/*.ts'"
+    "format:prettier": "prettier --check \"src/**/*.ts\""
   },
   "devDependencies": {
     "@types/jest": "^24.0.22",
