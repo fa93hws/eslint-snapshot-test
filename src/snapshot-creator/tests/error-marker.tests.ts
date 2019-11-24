@@ -1,10 +1,11 @@
 import { EOL } from 'os';
 import { SnapshotCreator } from '../snapshot-creator';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable @typescript-eslint/no-var-requires */
 const noUnusedVar = require('eslint/lib/rules/no-unused-vars');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const semi = require('eslint/lib/rules/semi');
+const noElseReturn = require('eslint/lib/rules/no-else-return');
+/* eslint-enable @typescript-eslint/no-var-requires */
 
 describe('when marking error to snapshot', () => {
   const snapshotCreator = new SnapshotCreator({
@@ -44,6 +45,20 @@ describe('when marking error to snapshot', () => {
     const code = 'var a = 1';
     const result = snapshotCreator
       .mark({ code, ruleName: 'semi', rule: semi })
+      .render();
+    expect(result).toMatchSnapshot();
+  });
+
+  it('generates snapshot for multiple lines error', () => {
+    const code = `function test(a) {
+  if (a) {
+    return 2;
+  } else {
+    return 3;
+  }
+}`;
+    const result = snapshotCreator
+      .mark({ code, ruleName: 'no-else', rule: noElseReturn })
       .render();
     expect(result).toMatchSnapshot();
   });

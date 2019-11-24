@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`when marking error to snapshot generates snapshot for multiple lines error 1`] = `
+"
+function test(a) {
+  if (a) {
+    return 2;
+  } else {
+         ~    [Unnecessary 'else' after 'return'.]
+    return 3;
+~~~~~~~~~~~~~    [Unnecessary 'else' after 'return'.]
+  }
+~~~    [Unnecessary 'else' after 'return'.]
+}"
+`;
+
 exports[`when marking error to snapshot generates snapshot for multiple one line error 1`] = `
 "
 var a = 1;

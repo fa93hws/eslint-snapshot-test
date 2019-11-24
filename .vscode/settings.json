@@ -1,8 +1,12 @@
 {
   "eslint.validate": [
     "javascript",
-    "typescript",
+    { "language": "typescript", "autoFix": true }
   ],
+  "eslint.autoFixOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "files.exclude": {
+    "node_modules": true
+  }
 }

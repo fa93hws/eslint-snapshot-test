@@ -1,6 +1,6 @@
 import { Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
 
-export type Position = {
+export type Range = {
   line: {
     start: number;
     end: number | undefined;
@@ -11,10 +11,22 @@ export type Position = {
   };
 };
 
-export class PositionHelper {
-  public constructor(private readonly lines: readonly string[]) {}
+type Position = {
+  line: number;
+  column: {
+    start: number;
+    end: number;
+  };
+};
 
-  public static getPosition(result: Linter.LintMessage): Position {
+export class PositionHelper {
+  private readonly lineWidths: readonly number[];
+
+  public constructor(lines: readonly string[]) {
+    this.lineWidths = lines.map(l => l.length);
+  }
+
+  public static getRange(result: Linter.LintMessage): Range {
     return {
       line: {
         // line starts from 1 in eslint
@@ -29,10 +41,32 @@ export class PositionHelper {
     };
   }
 
-  public getColumnOnLine(rawPosition: Position) {
+  private static getColumnStart(range: Range, lineNumber: number): number {
+    return lineNumber === range.line.start ? range.column.start : 0;
+  }
+
+  private getColumnEnd(range: Range, lineNumber: number): number {
+    return range.line.end != null && range.line.end === lineNumber
+      ? range.column.end ?? this.lineWidths[lineNumber]
+      : this.lineWidths[lineNumber];
+  }
+
+  private getColumn(range: Range, lineNumber: number) {
     return {
-      start: rawPosition.column.start,
-      end: rawPosition.column.end ?? this.lines[rawPosition.line.start].length,
+      start: PositionHelper.getColumnStart(range, lineNumber),
+      end: this.getColumnEnd(range, lineNumber),
     };
+  }
+
+  public parsePosition(range: Range): Position[] {
+    const endLine = range.line.end ?? this.lineWidths.length - 1;
+    const result = [];
+    for (let i = range.line.start; i <= endLine; i += 1) {
+      result.push({
+        line: i,
+        column: this.getColumn(range, i),
+      });
+    }
+    return result;
   }
 }

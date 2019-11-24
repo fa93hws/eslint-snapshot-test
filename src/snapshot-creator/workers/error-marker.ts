@@ -1,7 +1,7 @@
-import { Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
 import { EOL } from 'os';
 import { assertExist } from '../../utils/preconditions';
 import { BaseWorker } from './base';
+import { MarkedLine } from '../mark-result';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class ErrorWorker<TOption extends readonly any[]> extends BaseWorker<
@@ -17,15 +17,15 @@ export class ErrorWorker<TOption extends readonly any[]> extends BaseWorker<
       },
       this.filename,
     );
-    return this.markError(lintResult);
-  }
-
-  private markError(lintResult: Linter.LintMessage[]) {
-    const resultMarker = this.markResult({
+    const markedResult = this.markResult({
       lintResult,
       positionHelper: this.positionHelper,
     });
-    if (resultMarker.length === 0) {
+    return this.markError(markedResult);
+  }
+
+  private markError(markedResult: readonly MarkedLine[]) {
+    if (markedResult.length === 0) {
       return EOL + this.code;
     }
 
@@ -34,10 +34,10 @@ export class ErrorWorker<TOption extends readonly any[]> extends BaseWorker<
     for (let i = 0; i < this.codeLines.length; i += 1) {
       markedCodes.push(this.codeLines[i]);
       if (
-        markedIterIdx < resultMarker.length &&
-        i === resultMarker[markedIterIdx].afterLine
+        markedIterIdx < markedResult.length &&
+        i === markedResult[markedIterIdx].afterLine
       ) {
-        markedCodes.push(resultMarker[markedIterIdx].text);
+        markedCodes.push(markedResult[markedIterIdx].text);
         markedIterIdx += 1;
       }
     }
