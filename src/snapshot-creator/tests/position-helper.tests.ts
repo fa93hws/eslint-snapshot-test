@@ -37,7 +37,7 @@ describe('PositionHelper', () => {
     const positionHelper = new PositionHelper([
       'a'.repeat(5),
       'a'.repeat(7),
-      'a'.repeat(9),
+      'a'.repeat(9)
     ]);
 
     it('return the start and end if both are given', () => {
