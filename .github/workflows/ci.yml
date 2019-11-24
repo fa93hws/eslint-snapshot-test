@@ -25,7 +25,7 @@ jobs:
         with:
           path: cache
           key: lintingcache-${{ hashFiles('yarn.lock')}}
-          restore-keys: eslintcache-
+          restore-keys: lintingcache-
       - name: Check ESLint
         run: yarn lint:cache
       - name: Check code style
