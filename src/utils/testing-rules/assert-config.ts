@@ -8,7 +8,9 @@ const messages: Record<MessageIds, string> = {
   config: 'no error msg for this rule',
 };
 
-export function createAssertConfigRule(callback: (context: RuleContext<'config', []>) => void) {
+export function createAssertConfigRule(
+  callback: (context: RuleContext<'config', []>) => void,
+) {
   return createRule<Option, MessageIds>({
     name,
     meta: {
@@ -22,7 +24,7 @@ export function createAssertConfigRule(callback: (context: RuleContext<'config',
       },
     },
     defaultOptions: [],
-    create: (context) => ({
+    create: context => ({
       Program: () => callback(context),
     }),
   });

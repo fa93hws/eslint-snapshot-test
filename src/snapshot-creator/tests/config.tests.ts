@@ -21,7 +21,9 @@ describe('when providing configs', () => {
   it('can parse the filename correctly', () => {
     const wantFileName = 'want.filename.tsx';
     let gotFilename = '';
-    const rule = createAssertConfigRule((context) => { gotFilename = context.getFilename(); });
+    const rule = createAssertConfigRule(context => {
+      gotFilename = context.getFilename();
+    });
     snapshotCreator
       .mark({ code, ruleName, rule })
       .withFileName(wantFileName)
@@ -31,17 +33,19 @@ describe('when providing configs', () => {
 
   it('get <intpu> if the filename is not provided', () => {
     let gotFilename = '';
-    const rule = createAssertConfigRule((context) => { gotFilename = context.getFilename(); });
-    snapshotCreator
-      .mark({ code, ruleName, rule })
-      .render();
+    const rule = createAssertConfigRule(context => {
+      gotFilename = context.getFilename();
+    });
+    snapshotCreator.mark({ code, ruleName, rule }).render();
     expect(gotFilename).toEqual('<input>');
   });
 
   it('can add the settings', () => {
     let gotSettings = {};
     const wantSetting = { a: 1, b: 2, c: 3 };
-    const rule = createAssertConfigRule((context) => { gotSettings = context.settings; });
+    const rule = createAssertConfigRule(context => {
+      gotSettings = context.settings;
+    });
     snapshotCreator
       .mark({ code, ruleName, rule })
       .overrideConfig({ settings: wantSetting })
@@ -55,11 +59,15 @@ describe('when providing configs', () => {
       ...parserOptions,
       ecmaVersion: 6,
     };
-    const rule = createAssertConfigRule((context) => { gotParserOptions = context.parserOptions; });
+    const rule = createAssertConfigRule(context => {
+      gotParserOptions = context.parserOptions;
+    });
     snapshotCreator
       .mark({ code: '', ruleName: 'assert-parser-options', rule })
       .overrideConfig({ parserOptions: { ecmaVersion: 6 } })
       .render();
-    expect(gotParserOptions).toEqual(expect.objectContaining(wantParserOptions));
+    expect(gotParserOptions).toEqual(
+      expect.objectContaining(wantParserOptions),
+    );
   });
 });
