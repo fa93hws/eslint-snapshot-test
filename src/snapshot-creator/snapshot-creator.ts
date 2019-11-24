@@ -1,5 +1,5 @@
 import { RuleTesterConfig, Linter, RuleModule } from '@typescript-eslint/experimental-utils/dist/ts-eslint'
-import { ErrorMarker } from './workers/error-marker';
+import { ErrorWorker } from './workers/error-marker';
 
 export class SnapshotCreator {
   private readonly linter: Linter = new Linter();
@@ -16,7 +16,7 @@ export class SnapshotCreator {
       this.linter.defineRule(ruleName, rule);
     }
 
-    return new ErrorMarker<TOption>({
+    return new ErrorWorker<TOption>({
       code,
       ruleName,
       linter: this.linter,

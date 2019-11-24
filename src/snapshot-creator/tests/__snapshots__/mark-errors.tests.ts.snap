@@ -2,41 +2,29 @@
 
 exports[`when marking error to snapshot generates snapshot for multiple one line error 1`] = `
 "
-
 var a = 1;
     ~    ['a' is assigned a value but never used.]
 var b = 1;
 var foo = 1;
     ~~~    ['foo' is assigned a value but never used.]
-fn(b);
-
-"
+fn(b);"
 `;
 
 exports[`when marking error to snapshot generates snapshot for one line code 1`] = `
 "
-
 var a = 1;
-    ~    ['a' is assigned a value but never used.]
-
-"
+    ~    ['a' is assigned a value but never used.]"
 `;
 
 exports[`when marking error to snapshot generates snapshot for the error at last column 1`] = `
 "
-
 var a = 1
-         ~    [Missing semicolon.]
-
-"
+         ~    [Missing semicolon.]"
 `;
 
 exports[`when marking error to snapshot generates snapshot with rule option 1`] = `
 "
-
 a = 1;
 var b = 2;
-    ~    ['b' is assigned a value but never used.]
-
-"
+    ~    ['b' is assigned a value but never used.]"
 `;

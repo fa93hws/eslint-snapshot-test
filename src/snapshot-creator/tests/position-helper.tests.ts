@@ -38,7 +38,7 @@ describe('PositionHelper', () => {
       'a'.repeat(5),
       'a'.repeat(7),
       'a'.repeat(9),
-    ].join(EOL));
+    ]);
 
     it('return the start and end if both are given', () => {
       const position: Position = {
