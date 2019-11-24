@@ -1,6 +1,6 @@
 {
   "name": "eslint-snapshot-test",
-  "version": "0.0.1",
+  "version": "0.9.0",
   "description": "Provide snapshot test for eslint rule",
   "main": "dist/index.js",
   "repository": "https://github.com/fa93hws/eslint-snapshot-test.git",
@@ -9,12 +9,12 @@
   "scripts": {
     "clean:build": "rimraf dist",
     "clean:cache": "rimraf cache",
-    "build": "tsc --project tsconfig.build.json",
+    "build": "yarn clean:build && tsc --project tsconfig.build.json",
     "test": "jest --ci",
     "lint": "eslint 'src/**/*.ts{,x}'",
     "lint:cache": "yarn lint --cache --cache-location 'cache/eslint.json'",
     "lint:types": "tsc",
-    "lint:types:cache": "yarn lint:types --incremental --tsBuildInfoFile 'cache/ts-check.json'",
+    "lint:types:cache": "yarn lint:types",
     "format:prettier": "prettier --check 'src/**/*.ts'"
   },
   "devDependencies": {

@@ -4,10 +4,10 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es2020",
-    "baseUrl": "./",
+    "baseUrl": ".",
     "outDir": "dist",
-    "composite": true,
     "incremental": true,
+    "tsBuildInfoFile": "cache/ts-check.json",
     "allowSyntheticDefaultImports": true
   }
 }

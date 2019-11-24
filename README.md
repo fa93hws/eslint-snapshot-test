@@ -1,4 +1,5 @@
 # How to use
+
 ```
 import { SnapshotCreator } from 'eslint-snapshot-tester';
 import { semi } from 'eslint/rules/semi';
@@ -24,8 +25,7 @@ snapshotCreator
   .render();
 
 snapshotCreator
-  .mark(code)
-  .onRule('semi', semi)
+  .mark({ code, ruleName: 'semi', rule: semi })
   .overrideConfig({ settings: { foo: 'foo' } })
   .render();
 
