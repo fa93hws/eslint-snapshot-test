@@ -26,14 +26,21 @@ function drawWaveString({
   return leadingSpaces + waves;
 }
 
-export const markResult: MarkResultFn = ({ lintResult, positionHelper }) =>
-  lintResult.map(r => {
-    const position = PositionHelper.getPosition(r);
-    // TODO: an error across multiple lines
-    const errorPositionColumn = positionHelper.getColumnOnLine(position);
-    const waveString = drawWaveString(errorPositionColumn);
-    return {
-      afterLine: position.line.start,
-      text: `${waveString}    [${r.message}]`,
-    };
+const sortFn = (a: MarkedLine, b: MarkedLine) => a.afterLine - b.afterLine;
+
+export const markResult: MarkResultFn = ({ lintResult, positionHelper }) => {
+  const result: MarkedLine[] = [];
+  lintResult.forEach(r => {
+    const range = PositionHelper.getRange(r);
+    const positions = positionHelper.parsePosition(range);
+    positions.forEach(position => {
+      const waveString = drawWaveString(position.column);
+      result.push({
+        afterLine: position.line,
+        text: `${waveString}    [${r.message}]`,
+      });
+    });
   });
+  result.sort(sortFn);
+  return result;
+};
