@@ -18,7 +18,7 @@ type TestConfig<TOption extends readonly any[]> = Omit<
 
 export type RenderResult = {
   snapshot: string;
-  numErrors: number;
+  lintMessages: Linter.LintMessage[];
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

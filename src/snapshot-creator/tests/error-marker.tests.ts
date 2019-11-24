@@ -35,10 +35,10 @@ describe('when marking error to snapshot', () => {
 
   it('generates snapshot for multiple one line error', () => {
     const code = `var a = 1;${EOL}var b = 1;${EOL}var foo = 1;${EOL}fn(b);`;
-    const { snapshot, numErrors } = snapshotCreator
+    const { snapshot, lintMessages } = snapshotCreator
       .mark({ code, ruleName: 'no-unused-var', rule: noUnusedVar })
       .render();
-    expect(numErrors).toEqual(2);
+    expect(lintMessages.length).toEqual(2);
     expect(snapshot).toMatchSnapshot();
   });
 
@@ -60,10 +60,10 @@ describe('when marking error to snapshot', () => {
       '  }',
       '}',
     ].join(EOL);
-    const { snapshot, numErrors } = snapshotCreator
+    const { snapshot, lintMessages } = snapshotCreator
       .mark({ code, ruleName: 'no-else', rule: noElseReturn })
       .render();
-    expect(numErrors).toEqual(1);
+    expect(lintMessages.length).toEqual(1);
     expect(snapshot).toMatchSnapshot();
   });
 });
