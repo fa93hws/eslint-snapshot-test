@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Provide snapshot test for eslint rule",
   "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "repository": "https://github.com/fa93hws/eslint-snapshot-test.git",
   "author": "wjun0912@gmail.com",
   "license": "MIT",

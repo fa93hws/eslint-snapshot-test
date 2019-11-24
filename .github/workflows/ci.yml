@@ -21,8 +21,6 @@ jobs:
           key: yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: yarn-
       - name: Run yarn
-        env:
-          NPM_TOKEN: ''
         run: yarn
       - name: Find linting & testing Cache
         uses: actions/cache@v1
@@ -32,27 +30,19 @@ jobs:
           restore-keys: lintingcache-
       - name: Check ESLint
         run: yarn lint:cache
-        env:
-          NPM_TOKEN: ''
       - name: Check code style
         run: yarn format:prettier
-        env:
-          NPM_TOKEN: ''
       - name: Run unit test
         run: yarn test
-        env:
-          NPM_TOKEN: ''
       - name: Check Typescript Types
         run: yarn lint:types:cache
-        env:
-          NPM_TOKEN: ''
       - name: Build Typescript
         run: yarn build
         if: github.event_name == 'release'
-        env:
-          NPM_TOKEN: ''
       - name: Publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         if: github.event_name == 'release'
-        run: npm publish
+        run: |
+          npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+          npm publish
