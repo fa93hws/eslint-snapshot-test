@@ -3,18 +3,48 @@ name: CI
 on: [push]
 
 jobs:
-  build:
+  install-deps:
+    name: Install node modules
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
-      - name: install dependencies
+      - name: Find Cache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: yarn-
+      - name: Run yarn
         run: yarn
+
+  lint:
+    name: Run ESlint
+    needs: install-deps
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Run eslint
         run: yarn lint
-      - name: Check types
+
+  types:
+    name: Check Typescript types
+    needs: install-deps
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Typescript types
         run: yarn lint:types
-      - name: Check prettiers
-        run: yarn prettier
+
+  format:
+    name: Check code format
+    needs: install-deps
+    runs-on: ubuntu-latest
+
+  unit-tests:
+    name: Run unit tests
+    needs: install-deps
+    runs-on: ubuntu-latest
+    steps:
       - name: Run unit tests
         run: yarn test
