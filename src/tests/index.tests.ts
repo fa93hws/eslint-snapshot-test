@@ -66,4 +66,12 @@ describe('when marking error to snapshot', () => {
     expect(lintMessages.length).toEqual(1);
     expect(snapshot).toMatchSnapshot();
   });
+
+  it('generates fix snapshot for one line code', () => {
+    const code = 'var a = 1';
+    const { snapshot } = snapshotCreator
+      .fix({ code, ruleName: 'semi', rule: semi })
+      .render();
+    expect(snapshot).toEqual(`${code};`);
+  });
 });
