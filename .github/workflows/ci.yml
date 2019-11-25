@@ -63,3 +63,7 @@ jobs:
         run: yarn
       - name: Build typescript
         run: yarn build
+      - name: Upload code coverage
+        run: |
+          yarn test --coverage
+          yarn codecov -t ${{ secrets.CODECOV_TOKEN }}
