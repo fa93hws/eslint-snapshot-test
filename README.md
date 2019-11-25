@@ -1,5 +1,6 @@
-![](https://github.com/fa93hws/eslint-snapshot-test/workflows/CI/badge.svg)
-![](https://codecov.io/gh/fa93hws/eslint-snapshot-test/branch/master/graph/badge.svg)
+![Github CI](https://github.com/fa93hws/eslint-snapshot-test/workflows/CI/badge.svg)
+![Codecov](https://codecov.io/gh/fa93hws/eslint-snapshot-test/branch/master/graph/badge.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # How to use
 
