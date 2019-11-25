@@ -1,6 +1,6 @@
 {
   "name": "eslint-snapshot-test",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "Provide snapshot test for eslint rule",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
