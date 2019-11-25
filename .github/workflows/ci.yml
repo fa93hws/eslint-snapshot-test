@@ -39,7 +39,12 @@ jobs:
       - name: Check code style
         run: yarn format:prettier
       - name: Run unit test
-        run: yarn test
+        run: yarn test --coverage
+      - name: Upload code coverage to artifects
+        uses: actions/upload-artifact@v1
+        with:
+          name: coverage
+          path: coverage
       - name: Check Typescript Types
         run: yarn lint:types:cache
 
@@ -61,9 +66,10 @@ jobs:
           restore-keys: ${{ runner.OS }}-yarn-
       - name: Run yarn
         run: yarn
-      - name: Build typescript
-        run: yarn build
+      - name: Download coverage artifects
+        uses: actions/upload-artifact@v1
+        with:
+          name: coverage
+          path: coverage
       - name: Upload code coverage
-        run: |
-          yarn test --coverage
-          yarn codecov -t ${{ secrets.CODECOV_TOKEN }}
+        run: yarn codecov -t ${{ secrets.CODECOV_TOKEN }}
