@@ -1,5 +1,5 @@
 import { EOL } from 'os';
-import { SnapshotCreator } from '../snapshot-creator';
+import { SnapshotCreator } from '../index';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 const noUnusedVar = require('eslint/lib/rules/no-unused-vars');

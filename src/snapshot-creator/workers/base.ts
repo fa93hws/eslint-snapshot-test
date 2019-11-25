@@ -47,20 +47,18 @@ export abstract class BaseWorker<TOption extends readonly any[]> {
     linter,
     ruleName,
     markResult,
-    positionHelper,
   }: {
     code: string;
     linter: Linter;
     ruleName: string;
     config: RuleTesterConfig;
     markResult?: MarkResultFn;
-    positionHelper?: PositionHelper;
   }) {
     this.code = code;
     this.config = config;
     this.linter = linter;
     this.ruleName = ruleName;
-    this.positionHelper = positionHelper ?? new PositionHelper(this.codeLines);
+    this.positionHelper = new PositionHelper(this.codeLines);
     this.markResult = markResult ?? _markResult;
   }
 
