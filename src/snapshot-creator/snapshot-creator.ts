@@ -3,7 +3,7 @@ import {
   Linter,
   RuleModule,
 } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
-import { ErrorWorker } from './workers/error-marker';
+import { ErrorWorker } from './workers/error-worker';
 
 export class SnapshotCreator {
   private readonly linter: Linter = new Linter();

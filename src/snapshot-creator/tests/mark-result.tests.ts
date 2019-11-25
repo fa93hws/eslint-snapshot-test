@@ -116,4 +116,13 @@ describe('ResultMarker', () => {
       },
     ]);
   });
+
+  it('transforms error after last column', () => {
+    const lintResult: Linter.LintMessage[] = [
+      createLintMessage({ line: 1, column: 2 }),
+    ];
+    const positionHelper = new PositionHelper(['1']);
+    const markedResult = markResult({ lintResult, positionHelper });
+    expect(markedResult).toEqual([{ afterLine: 0, text: ' ~    [message]' }]);
+  });
 });
