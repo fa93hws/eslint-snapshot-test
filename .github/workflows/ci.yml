@@ -49,25 +49,18 @@ jobs:
       - name: Check Typescript Types
         run: yarn lint:types:cache
 
-  build:
+  upload-code-coverage:
     needs: linting-test
-    name: build
+    name: Upload code coverage
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - name: Find Yarn Cache
-        uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: ${{ runner.OS }}-yarn-${{ hashFiles('yarn.lock') }}
-          restore-keys: ${{ runner.OS }}-yarn-
       - name: Download coverage artifects
         uses: actions/upload-artifact@v1
         with:
           name: coverage
-      - name: Upload code coverage
-        run: yarn codecov -t ${{ secrets.CODECOV_TOKEN }}
+      - uses: actions/checkout@master
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
