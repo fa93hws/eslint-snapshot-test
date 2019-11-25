@@ -72,7 +72,8 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: coverage
-      - uses: actions/checkout@master
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage/**/*
+          flags: unittests
