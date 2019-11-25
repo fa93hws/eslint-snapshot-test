@@ -34,6 +34,7 @@ jobs:
         run: yarn lint:types
 
   test:
+    needs: [lint]
     name: Test
     runs-on: ${{ matrix.os }}
 
@@ -61,7 +62,7 @@ jobs:
           path: coverage
 
   upload-code-coverage:
-    needs: linting-test
+    needs: [lint, test]
     name: Upload code coverage
     runs-on: ubuntu-latest
 
