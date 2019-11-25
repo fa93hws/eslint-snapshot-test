@@ -1,4 +1,5 @@
 ![](https://github.com/fa93hws/eslint-snapshot-test/workflows/CI/badge.svg)
+![](https://codecov.io/gh/fa93hws/eslint-snapshot-test/branch/master/graph/badge.svg)
 
 # How to use
 
