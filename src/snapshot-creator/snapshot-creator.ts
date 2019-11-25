@@ -4,6 +4,7 @@ import {
   RuleModule,
 } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
 import { ErrorWorker } from './workers/error-worker';
+import { FixWorker } from './workers/fixer';
 
 export class SnapshotCreator {
   private readonly linter: Linter = new Linter();
@@ -29,6 +30,29 @@ export class SnapshotCreator {
     }
 
     return new ErrorWorker<TOption>({
+      code,
+      ruleName,
+      linter: this.linter,
+      config: this.config,
+    });
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public fix<TOption extends readonly any[]>({
+    code,
+    ruleName,
+    rule,
+  }: {
+    code: string;
+    ruleName: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    rule: RuleModule<any, TOption, any>;
+  }) {
+    if (!this.linter.getRules().has(ruleName)) {
+      this.linter.defineRule(ruleName, rule);
+    }
+
+    return new FixWorker<TOption>({
       code,
       ruleName,
       linter: this.linter,
