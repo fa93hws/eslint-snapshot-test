@@ -42,7 +42,7 @@ jobs:
         run: yarn test --coverage
       - name: Upload code coverage to artifects
         uses: actions/upload-artifact@v1
-        if: runner.OS == ubuntu-latest && matrix.node == 12
+        if: runner.OS == 'ubuntu-latest' && matrix.node == '12'
         with:
           name: coverage
           path: coverage
