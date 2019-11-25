@@ -3,5 +3,5 @@ module.exports = {
   preset: 'ts-jest',
   testMatch: ['**/tests/**/*.tests.ts'],
   collectCoverageFrom: ['**/*.ts', '!**/node_modules/**'],
-  coverageReporters: ['text'],
+  coverageDirectory: 'coverage',
 };

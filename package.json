@@ -16,7 +16,8 @@
     "lint:cache": "yarn lint --cache --cache-location \"cache/eslint.json\"",
     "lint:types": "tsc --project tsconfig.check.json",
     "lint:types:cache": "yarn lint:types",
-    "format:prettier": "prettier --check \"src/**/*.ts\""
+    "format:prettier": "prettier --check \"src/**/*.ts\"",
+    "codecov": "codecov"
   },
   "devDependencies": {
     "@types/jest": "^24.0.22",
@@ -26,6 +27,7 @@
     "@typescript-eslint/experimental-utils": "^2.8.0",
     "@typescript-eslint/parser": "^2.8.0",
     "@typescript-eslint/typescript-estree": "^2.8.0",
+    "codecov": "^3.6.1",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.7.0",
