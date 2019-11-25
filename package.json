@@ -15,7 +15,6 @@
     "lint": "eslint \"src/**/*.ts\"",
     "lint:cache": "yarn lint --cache --cache-location \"cache/eslint.json\"",
     "lint:types": "tsc --project tsconfig.check.json",
-    "lint:types:cache": "yarn lint:types",
     "format:prettier": "prettier --check \"src/**/*.ts\"",
     "codecov": "codecov"
   },

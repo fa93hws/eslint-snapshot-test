@@ -6,20 +6,12 @@ on:
       - '**.md'
 
 jobs:
-  linting-test:
-    name: Linting and test
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        node: [10, 12, 13]
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
       - name: Find Yarn Cache
         uses: actions/cache@v1
         with:
@@ -28,7 +20,7 @@ jobs:
           restore-keys: ${{ runner.OS }}-yarn-
       - name: Run yarn
         run: yarn
-      - name: Find linting & testing Cache
+      - name: Find linting Cache
         uses: actions/cache@v1
         with:
           path: cache
@@ -38,21 +30,20 @@ jobs:
         run: yarn lint:cache
       - name: Check code style
         run: yarn format:prettier
-      - name: Run unit test
-        run: yarn test
-      - name: Check Typescript Types
-        run: yarn lint:types:cache
+      - name: Check typescript
+        run: yarn lint:types
 
-  build:
-    needs: linting-test
-    name: build
-    runs-on: ubuntu-latest
+  test:
+    needs: [lint]
+    name: Test
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
       - name: Find Yarn Cache
         uses: actions/cache@v1
         with:
@@ -61,9 +52,27 @@ jobs:
           restore-keys: ${{ runner.OS }}-yarn-
       - name: Run yarn
         run: yarn
-      - name: Build typescript
-        run: yarn build
-      - name: Upload code coverage
-        run: |
-          yarn test --coverage
-          yarn codecov -t ${{ secrets.CODECOV_TOKEN }}
+      - name: Run unit test
+        run: yarn test --coverage
+      - name: Upload code coverage to artifects
+        uses: actions/upload-artifact@v1
+        if: matrix.OS == 'ubuntu-latest'
+        with:
+          name: coverage
+          path: coverage
+
+  upload-code-coverage:
+    needs: [lint, test]
+    name: Upload code coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Download coverage artifects
+        uses: actions/download-artifact@v1
+        with:
+          name: coverage
+      - uses: actions/checkout@master
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
