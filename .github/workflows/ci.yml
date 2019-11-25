@@ -39,9 +39,7 @@ jobs:
       - name: Check code style
         run: yarn format:prettier
       - name: Run unit test
-        run: |
-          yarn test --cache
-          yarn codecov -t ${{ secrets.CODECOV_TOKEN }}
+        run: yarn test
       - name: Check Typescript Types
         run: yarn lint:types:cache
 
@@ -65,3 +63,7 @@ jobs:
         run: yarn
       - name: Build typescript
         run: yarn build
+      - name: Upload code coverage
+        run: |
+          yarn test --coverage
+          yarn codecov -t ${{ secrets.CODECOV_TOKEN }}
