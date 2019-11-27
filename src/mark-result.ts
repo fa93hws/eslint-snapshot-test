@@ -1,7 +1,8 @@
+import { EOL } from 'os';
 import { Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
 import { PositionHelper } from './position-helper';
 
-export type MarkedLine = {
+type MarkedLine = {
   // To be inserted in the original code, start from 0
   afterLine: number;
   text: string;
@@ -10,7 +11,8 @@ export type MarkedLine = {
 export type MarkResultFn = (param: {
   lintResult: readonly Linter.LintMessage[];
   positionHelper: PositionHelper;
-}) => MarkedLine[];
+  codeLines: readonly string[];
+}) => string;
 
 function drawWaveString({
   start: columnStart,
@@ -28,7 +30,34 @@ function drawWaveString({
 
 const sortFn = (a: MarkedLine, b: MarkedLine) => a.afterLine - b.afterLine;
 
-export const markResult: MarkResultFn = ({ lintResult, positionHelper }) => {
+function markErrorOnCode(
+  markedResult: readonly MarkedLine[],
+  codeLines: readonly string[],
+) {
+  if (markedResult.length === 0) {
+    return EOL + codeLines.join(EOL);
+  }
+
+  const markedCodes = [''];
+  let markedIterIdx = 0;
+  for (let i = 0; i < codeLines.length; i += 1) {
+    markedCodes.push(codeLines[i]);
+    if (
+      markedIterIdx < markedResult.length &&
+      i === markedResult[markedIterIdx].afterLine
+    ) {
+      markedCodes.push(markedResult[markedIterIdx].text);
+      markedIterIdx += 1;
+    }
+  }
+  return markedCodes.join(EOL);
+}
+
+export const markResult: MarkResultFn = ({
+  codeLines,
+  lintResult,
+  positionHelper,
+}) => {
   const result: MarkedLine[] = [];
   lintResult.forEach(r => {
     const range = PositionHelper.getRange(r);
@@ -42,5 +71,5 @@ export const markResult: MarkResultFn = ({ lintResult, positionHelper }) => {
     });
   });
   result.sort(sortFn);
-  return result;
+  return markErrorOnCode(result, codeLines);
 };
