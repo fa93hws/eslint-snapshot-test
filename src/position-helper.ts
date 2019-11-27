@@ -27,6 +27,7 @@ export class PositionHelper {
   }
 
   public static getRange(result: Linter.LintMessage): Range {
+    // console.log(result.endLine);
     return {
       line: {
         // line starts from 1 in eslint
