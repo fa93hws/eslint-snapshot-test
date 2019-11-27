@@ -99,11 +99,14 @@ export class RuleRunner<TOption extends readonly any[]> {
 
   public render() {
     assertExist(this.ruleName, 'rule name must not be empty');
+    const rule = this.linter.getRules().get(this.ruleName);
+    assertExist(rule, `rule not found with name ${this.ruleName}`);
     const lintResult = this.linter.verify(...this.parameter);
-    const fixReport =
-      this.linter.getRules().get(this.ruleName)?.meta?.fixable != null
-        ? this.linter.verifyAndFix(...this.parameter)
-        : undefined;
+
+    const fixReport = rule.meta?.fixable
+      ? this.linter.verifyAndFix(...this.parameter)
+      : undefined;
+
     const markedResult = this.markResult({
       lintResult,
       positionHelper: this.positionHelper,

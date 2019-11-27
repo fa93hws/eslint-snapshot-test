@@ -1,4 +1,5 @@
 import { EOL } from 'os';
+import { createAssertConfigRule } from '../utils/testing-rules/assert-config';
 import { SnapshotCreator } from '../index';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -65,5 +66,16 @@ describe('when marking error to snapshot', () => {
       .render();
     expect(lintMessages.length).toEqual(1);
     expect(snapshot).toMatchSnapshot();
+  });
+
+  it('will not override the previous rule with same name', () => {
+    const callbackA = jest.fn();
+    const ruleA = createAssertConfigRule(() => callbackA());
+    const callbackB = jest.fn();
+    const ruleB = createAssertConfigRule(() => callbackB());
+    snapshotCreator.mark({ code: '', ruleName: 'ruleA', rule: ruleA }).render();
+    snapshotCreator.mark({ code: '', ruleName: 'ruleA', rule: ruleB }).render();
+    expect(callbackA).toBeCalledTimes(2);
+    expect(callbackB).not.toBeCalled();
   });
 });

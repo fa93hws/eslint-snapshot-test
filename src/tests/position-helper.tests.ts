@@ -42,6 +42,20 @@ describe('PositionHelper', () => {
         }),
       );
     });
+
+    it('return first char if the error happen in Program', () => {
+      const result = createLintResult({
+        column: 0,
+        line: 0,
+      });
+      const position = PositionHelper.getRange(result);
+      expect(position).toEqual(
+        expect.objectContaining({
+          line: { start: 0, end: undefined },
+          column: { start: 0, end: undefined },
+        }),
+      );
+    });
   });
 
   describe('parsePosition', () => {
