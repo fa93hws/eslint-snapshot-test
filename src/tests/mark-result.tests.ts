@@ -8,7 +8,7 @@ describe('markResult', () => {
   const createLines = (num: number) => new Array(num).fill(oneLineCode);
   const createLintMessage = ({
     line,
-    endLine = line,
+    endLine,
     column,
     endColumn,
     message = 'message',
@@ -33,7 +33,7 @@ describe('markResult', () => {
   it('generates for one line code to the end without endColumn', () => {
     const codeLines = createLines(3);
     const lintResult: Linter.LintMessage[] = [
-      createLintMessage({ line: 1, column: 3 }),
+      createLintMessage({ line: 1, column: 3, endLine: 1 }),
     ];
     const positionHelper = new PositionHelper(codeLines);
     const markedResult = markResult({ codeLines, lintResult, positionHelper });
@@ -49,7 +49,7 @@ describe('markResult', () => {
   it('generates for one line error to the endColumn', () => {
     const codeLines = createLines(4);
     const lintResult: Linter.LintMessage[] = [
-      createLintMessage({ line: 1, column: 3, endColumn: 6 }),
+      createLintMessage({ line: 1, endLine: 1, column: 3, endColumn: 6 }),
     ];
     const positionHelper = new PositionHelper(codeLines);
     const markedResult = markResult({ codeLines, lintResult, positionHelper });
@@ -66,8 +66,8 @@ describe('markResult', () => {
   it('generates multiple one line errors', () => {
     const codeLines = createLines(3);
     const lintResult: Linter.LintMessage[] = [
-      createLintMessage({ line: 1, column: 3, endColumn: 6 }),
-      createLintMessage({ line: 3, column: 3 }),
+      createLintMessage({ line: 1, endLine: 1, column: 3, endColumn: 6 }),
+      createLintMessage({ line: 3, endLine: 3, column: 3 }),
     ];
     const positionHelper = new PositionHelper(codeLines);
     const markedResult = markResult({ codeLines, lintResult, positionHelper });
@@ -84,8 +84,8 @@ describe('markResult', () => {
   it('generates for multiple one line errors in multiple lines in order', () => {
     const codeLines = createLines(3);
     const lintResult: Linter.LintMessage[] = [
-      createLintMessage({ line: 3, column: 3 }),
-      createLintMessage({ line: 1, column: 3, endColumn: 6 }),
+      createLintMessage({ line: 3, endLine: 3, column: 3 }),
+      createLintMessage({ line: 1, endLine: 1, column: 3, endColumn: 6 }),
     ];
     const positionHelper = new PositionHelper(codeLines);
     const markedResult = markResult({ codeLines, lintResult, positionHelper });
@@ -177,5 +177,27 @@ describe('markResult', () => {
       positionHelper,
     });
     expect(markedResult.split(EOL)).toEqual(['', '', '~    [message]']);
+  });
+
+  it('generates for error to the end without endLine', () => {
+    const codeLines = createLines(3);
+    const lintResult: Linter.LintMessage[] = [
+      createLintMessage({ line: 1, column: 3 }),
+    ];
+    const positionHelper = new PositionHelper(codeLines);
+    const markedResult = markResult({
+      codeLines,
+      lintResult,
+      positionHelper,
+    });
+    expect(markedResult.split(EOL)).toEqual([
+      '',
+      codeLines[0],
+      '  ~~~~~~~~    [message]',
+      codeLines[1],
+      '~~~~~~~~~~    [message]',
+      codeLines[2],
+      '~~~~~~~~~~    [message]',
+    ]);
   });
 });
