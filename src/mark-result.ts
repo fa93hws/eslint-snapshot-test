@@ -42,7 +42,7 @@ function markErrorOnCode(
   let markedIterIdx = 0;
   for (let i = 0; i < codeLines.length; i += 1) {
     markedCodes.push(codeLines[i]);
-    if (
+    while (
       markedIterIdx < markedResult.length &&
       i === markedResult[markedIterIdx].afterLine
     ) {

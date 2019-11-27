@@ -200,4 +200,43 @@ describe('markResult', () => {
       '~~~~~~~~~~    [message]',
     ]);
   });
+
+  it('generates for multiple errors on the same line', () => {
+    const codeLines = createLines(3);
+    const lintResult: Linter.LintMessage[] = [
+      createLintMessage({ line: 1, endLine: 1, column: 3, message: 'error0' }),
+      createLintMessage({
+        line: 1,
+        endLine: 3,
+        column: 4,
+        endColumn: 6,
+        message: 'error1',
+      }),
+      createLintMessage({
+        line: 1,
+        endLine: 2,
+        column: 2,
+        endColumn: 4,
+        message: 'error2',
+      }),
+    ];
+    const positionHelper = new PositionHelper(codeLines);
+    const markedResult = markResult({
+      codeLines,
+      lintResult,
+      positionHelper,
+    });
+    expect(markedResult.split(EOL)).toEqual([
+      '',
+      codeLines[0],
+      '  ~~~~~~~~    [error0]',
+      '   ~~~~~~~    [error1]',
+      ' ~~~~~~~~~    [error2]',
+      codeLines[1],
+      '~~~~~~~~~~    [error1]',
+      '~~~    [error2]',
+      codeLines[2],
+      '~~~~~    [error1]',
+    ]);
+  });
 });
