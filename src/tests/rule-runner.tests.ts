@@ -1,77 +1,74 @@
-import { Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
+import {
+  Linter,
+  RuleTesterConfig,
+} from '@typescript-eslint/experimental-utils/dist/ts-eslint';
 import { RuleRunner } from '../rule-runner';
-import { SnapshotCreator } from '../index';
 import { createAssertConfigRule } from '../utils/testing-rules/assert-config';
 
 describe('ruleRunner', () => {
   describe('when providing configs', () => {
-    const parserOptions = {
-      ecmaVersion: 2017,
-      sourceType: 'module',
-    } as const;
+    const config = ({} as unknown) as RuleTesterConfig;
     const code = '';
     const ruleName = 'ruleName';
-
-    let snapshotCreator: SnapshotCreator;
+    let linter: Linter;
 
     beforeEach(() => {
-      snapshotCreator = new SnapshotCreator({
-        parser: '@typescript-eslint/parser',
-        parserOptions,
-      });
+      linter = new Linter();
     });
 
-    it('can parse the filename correctly', () => {
+    it('overrides the filename', () => {
       const wantFileName = 'want.filename.tsx';
-      let gotFilename = '';
-      const rule = createAssertConfigRule(context => {
-        gotFilename = context.getFilename();
-      });
-      snapshotCreator
-        .mark({ code, ruleName, rule })
+      const callback = jest.fn();
+      const rule = createAssertConfigRule(context =>
+        callback(context.getFilename()),
+      );
+      linter.defineRule(ruleName, rule);
+      new RuleRunner({ code, linter, ruleName, config })
         .withFileName(wantFileName)
         .render();
-      expect(gotFilename).toEqual(wantFileName);
+      expect(callback).toBeCalledTimes(1);
+      expect(callback).toBeCalledWith(wantFileName);
     });
 
-    it('get <intpu> if the filename is not provided', () => {
-      let gotFilename = '';
+    it('produces <input> if the filename is not provided', () => {
+      const callback = jest.fn();
       const rule = createAssertConfigRule(context => {
-        gotFilename = context.getFilename();
+        callback(context.getFilename());
       });
-      snapshotCreator.mark({ code, ruleName, rule }).render();
-      expect(gotFilename).toEqual('<input>');
+      linter.defineRule(ruleName, rule);
+      new RuleRunner({ code, linter, ruleName, config }).render();
+      expect(callback).toBeCalledTimes(1);
+      expect(callback).toBeCalledWith('<input>');
     });
 
     it('can add the settings', () => {
-      let gotSettings = {};
+      const callback = jest.fn();
       const wantSetting = { a: 1, b: 2, c: 3 };
       const rule = createAssertConfigRule(context => {
-        gotSettings = context.settings;
+        callback(context.settings);
       });
-      snapshotCreator
-        .mark({ code, ruleName, rule })
+      linter.defineRule(ruleName, rule);
+      new RuleRunner({ code, linter, ruleName, config })
         .overrideConfig({ settings: wantSetting })
         .render();
-      expect(gotSettings).toEqual(wantSetting);
+      expect(callback).toBeCalledTimes(1);
+      expect(callback).toBeCalledWith(wantSetting);
     });
 
     it('overrides ecmaVersion in parserOptions', () => {
-      let gotParserOptions = {};
+      const callback = jest.fn();
       const wantParserOptions = {
-        ...parserOptions,
         ecmaVersion: 6,
       };
       const rule = createAssertConfigRule(context => {
-        gotParserOptions = context.parserOptions;
+        callback(context.parserOptions);
       });
-      snapshotCreator
-        .mark({ code: '', ruleName: 'assert-parser-options', rule })
+      linter.defineRule(ruleName, rule);
+      new RuleRunner({ code, linter, ruleName, config })
         .overrideConfig({ parserOptions: { ecmaVersion: 6 } })
         .render();
-      expect(gotParserOptions).toEqual(
-        expect.objectContaining(wantParserOptions),
-      );
+      expect(callback).toBeCalledTimes(1);
+      expect(callback).toBeCalledWith(wantParserOptions);
     });
   });
 

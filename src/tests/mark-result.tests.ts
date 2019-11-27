@@ -164,4 +164,18 @@ describe('markResult', () => {
     });
     expect(markedResult).toEqual(['', ...codeLines].join(EOL));
   });
+
+  it('generates for error happen at empty file at Program node', () => {
+    const codeLines = [''];
+    const lintResult: Linter.LintMessage[] = [
+      createLintMessage({ line: 0, column: 0 }),
+    ];
+    const positionHelper = new PositionHelper(codeLines);
+    const markedResult = markResult({
+      codeLines,
+      lintResult,
+      positionHelper,
+    });
+    expect(markedResult.split(EOL)).toEqual(['', '', '~    [message]']);
+  });
 });

@@ -30,12 +30,12 @@ export class PositionHelper {
     return {
       line: {
         // line starts from 1 in eslint
-        start: result.line - 1,
+        start: Math.max(0, result.line - 1),
         end: result.endLine ? result.endLine - 1 : result.endLine,
       },
       column: {
         // column starts from 1 in eslint
-        start: result.column - 1,
+        start: Math.max(0, result.column - 1),
         end: result.endColumn ? result.endColumn - 1 : result.endColumn,
       },
     };

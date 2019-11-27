@@ -18,7 +18,7 @@ export function createAssertConfigRule(
       schema: [],
       messages,
       docs: {
-        description: 'Must have comment in message file',
+        description: '',
         category: 'Best Practices',
         recommended: 'error',
       },
