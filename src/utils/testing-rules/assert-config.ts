@@ -1,4 +1,8 @@
-import { RuleContext } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
+import type {
+  RuleContext,
+  RuleListener,
+  RuleModule,
+} from '@typescript-eslint/experimental-utils/dist/ts-eslint';
 import { createRule } from './create-rule';
 
 type MessageIds = 'config';
@@ -10,7 +14,7 @@ const messages: Record<MessageIds, string> = {
 
 export function createAssertConfigRule(
   callback: (context: RuleContext<'config', []>) => void,
-) {
+): RuleModule<'config', [], RuleListener> {
   return createRule<Option, MessageIds>({
     name,
     meta: {
@@ -24,7 +28,7 @@ export function createAssertConfigRule(
       },
     },
     defaultOptions: [],
-    create: context => ({
+    create: (context) => ({
       Program: () => callback(context),
     }),
   });

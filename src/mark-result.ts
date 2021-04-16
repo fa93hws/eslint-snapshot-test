@@ -59,10 +59,10 @@ export const markResult: MarkResultFn = ({
   positionHelper,
 }) => {
   const result: MarkedLine[] = [];
-  lintResult.forEach(r => {
+  lintResult.forEach((r) => {
     const range = PositionHelper.getRange(r);
     const positions = positionHelper.parsePosition(range);
-    positions.forEach(position => {
+    positions.forEach((position) => {
       const waveString = drawWaveString(position.column);
       result.push({
         afterLine: position.line,

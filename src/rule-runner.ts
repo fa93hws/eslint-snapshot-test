@@ -71,33 +71,37 @@ export class RuleRunner<TOption extends readonly any[]> {
     return this._codeLines;
   }
 
-  public withOptions(options: TOption) {
+  public withOptions(options: TOption): RuleRunner<TOption> {
     this.ruleOption = ['error', ...options];
     return this;
   }
 
-  public overrideConfig(config: TestConfig<TOption>) {
+  public overrideConfig(config: TestConfig<TOption>): RuleRunner<TOption> {
     this.config = merge(this.config, config);
     return this;
   }
 
-  public withFileName(fileName: string) {
+  public withFileName(fileName: string): RuleRunner<TOption> {
     this.filename = fileName;
     return this;
   }
 
-  private get parameter(): [string, Linter.Config, string | undefined] {
+  private get parameter(): [string, Linter.Config, { filename?: string }] {
     return [
       this.code,
       {
         ...this.config,
         rules: { [this.ruleName]: this.ruleOption },
       },
-      this.filename,
+      { filename: this.filename },
     ];
   }
 
-  public render() {
+  public render(): {
+    lintMessages: Linter.LintMessage[];
+    snapshot: string;
+    fixedOutput?: string;
+  } {
     assertExist(this.ruleName, 'rule name must not be empty');
     const rule = this.linter.getRules().get(this.ruleName);
     assertExist(rule, `rule not found with name ${this.ruleName}`);

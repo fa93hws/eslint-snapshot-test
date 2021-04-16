@@ -23,7 +23,7 @@ export class PositionHelper {
   private readonly lineWidths: readonly number[];
 
   public constructor(lines: readonly string[]) {
-    this.lineWidths = lines.map(l => l.length);
+    this.lineWidths = lines.map((l) => l.length);
   }
 
   public static getRange(result: Linter.LintMessage): Range {
