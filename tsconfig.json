@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "strict": true,
+    "esModuleInterop": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "ES2019",

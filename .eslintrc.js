@@ -32,9 +32,16 @@ module.exports = {
       },
     ],
     'import/no-extraneous-dependencies': 'off',
+    'import/no-dynamic-require': 'off',
+    'import/extensions': [
+      'error',
+      {
+        js: 'never',
+        ts: 'never,',
+      },
+    ],
     '@typescript-eslint/explicit-function-return-type': 'off',
     'no-underscore-dangle': 'off',
-    'import/no-dynamic-require': 'off',
     'global-require': 'off',
     'no-useless-constructor': 'off',
     'no-empty-function': 'off',

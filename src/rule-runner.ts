@@ -4,11 +4,10 @@ import {
   RuleTesterConfig,
   Linter,
 } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
+import merge from 'lodash.merge';
 import { PositionHelper } from './position-helper';
 import { assertExist } from './utils/preconditions';
 import { markResult as _markResult, MarkResultFn } from './mark-result';
-
-import merge = require('lodash.merge');
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TestConfig<TOption extends readonly any[]> = Omit<
