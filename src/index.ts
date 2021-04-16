@@ -5,10 +5,15 @@ import {
 } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
 import { RuleRunner } from './rule-runner';
 
-export class SnapshotCreator {
-  private readonly linter: Linter = new Linter();
+type SnapshotCreatorConfig = RuleTesterConfig & {
+  cwd?: string;
+};
 
-  public constructor(private readonly config: RuleTesterConfig) {
+export class SnapshotCreator {
+  private readonly linter: Linter;
+
+  public constructor(private readonly config: SnapshotCreatorConfig) {
+    this.linter = new Linter({ cwd: config.cwd });
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     this.linter.defineParser(config.parser, require(config.parser));
   }
@@ -23,7 +28,7 @@ export class SnapshotCreator {
     ruleName: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     rule: RuleModule<any, TOption, any>;
-  }) {
+  }): RuleRunner<TOption> {
     if (!this.linter.getRules().has(ruleName)) {
       this.linter.defineRule(ruleName, rule);
     }

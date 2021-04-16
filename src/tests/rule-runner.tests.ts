@@ -19,7 +19,7 @@ describe('ruleRunner', () => {
     it('overrides the filename', () => {
       const wantFileName = 'want.filename.tsx';
       const callback = jest.fn();
-      const rule = createAssertConfigRule(context =>
+      const rule = createAssertConfigRule((context) =>
         callback(context.getFilename()),
       );
       linter.defineRule(ruleName, rule);
@@ -32,7 +32,7 @@ describe('ruleRunner', () => {
 
     it('produces <input> if the filename is not provided', () => {
       const callback = jest.fn();
-      const rule = createAssertConfigRule(context => {
+      const rule = createAssertConfigRule((context) => {
         callback(context.getFilename());
       });
       linter.defineRule(ruleName, rule);
@@ -44,7 +44,7 @@ describe('ruleRunner', () => {
     it('can add the settings', () => {
       const callback = jest.fn();
       const wantSetting = { a: 1, b: 2, c: 3 };
-      const rule = createAssertConfigRule(context => {
+      const rule = createAssertConfigRule((context) => {
         callback(context.settings);
       });
       linter.defineRule(ruleName, rule);
@@ -60,7 +60,7 @@ describe('ruleRunner', () => {
       const wantParserOptions = {
         ecmaVersion: 6,
       };
-      const rule = createAssertConfigRule(context => {
+      const rule = createAssertConfigRule((context) => {
         callback(context.parserOptions);
       });
       linter.defineRule(ruleName, rule);
