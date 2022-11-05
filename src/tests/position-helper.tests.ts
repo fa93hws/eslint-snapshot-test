@@ -1,4 +1,4 @@
-import { Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
+import { TSESLint } from '@typescript-eslint/utils';
 import { PositionHelper, Range } from '../position-helper';
 
 function createLintResult({
@@ -11,7 +11,7 @@ function createLintResult({
   column: number;
   endLine?: number;
   endColumn?: number;
-}): Linter.LintMessage {
+}): TSESLint.Linter.LintMessage {
   return {
     column,
     line,

@@ -1,19 +1,15 @@
-import {
-  RuleTesterConfig,
-  Linter,
-  RuleModule,
-} from '@typescript-eslint/experimental-utils/dist/ts-eslint';
+import { TSESLint } from '@typescript-eslint/utils';
 import { RuleRunner } from './rule-runner';
 
-type SnapshotCreatorConfig = RuleTesterConfig & {
+type SnapshotCreatorConfig = TSESLint.RuleTesterConfig & {
   cwd?: string;
 };
 
 export class SnapshotCreator {
-  private readonly linter: Linter;
+  private readonly linter: TSESLint.Linter;
 
   public constructor(private readonly config: SnapshotCreatorConfig) {
-    this.linter = new Linter({ cwd: config.cwd });
+    this.linter = new TSESLint.Linter({ cwd: config.cwd });
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     this.linter.defineParser(config.parser, require(config.parser));
   }
@@ -27,7 +23,7 @@ export class SnapshotCreator {
     code: string;
     ruleName: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    rule: RuleModule<any, TOption, any>;
+    rule: TSESLint.RuleModule<any, TOption, any>;
   }): RuleRunner<TOption> {
     if (!this.linter.getRules().has(ruleName)) {
       this.linter.defineRule(ruleName, rule);

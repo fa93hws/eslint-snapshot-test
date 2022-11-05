@@ -1,5 +1,5 @@
 import { EOL } from 'os';
-import { Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
+import { TSESLint } from '@typescript-eslint/utils';
 import { PositionHelper } from './position-helper';
 
 type MarkedLine = {
@@ -9,7 +9,7 @@ type MarkedLine = {
 };
 
 export type MarkResultFn = (param: {
-  lintResult: readonly Linter.LintMessage[];
+  lintResult: readonly TSESLint.Linter.LintMessage[];
   positionHelper: PositionHelper;
   codeLines: readonly string[];
 }) => string;

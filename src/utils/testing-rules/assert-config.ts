@@ -1,8 +1,4 @@
-import type {
-  RuleContext,
-  RuleListener,
-  RuleModule,
-} from '@typescript-eslint/experimental-utils/dist/ts-eslint';
+import type { TSESLint } from '@typescript-eslint/utils';
 import { createRule } from './create-rule';
 
 type MessageIds = 'config';
@@ -13,8 +9,8 @@ const messages: Record<MessageIds, string> = {
 };
 
 export function createAssertConfigRule(
-  callback: (context: RuleContext<'config', []>) => void,
-): RuleModule<'config', [], RuleListener> {
+  callback: (context: TSESLint.RuleContext<'config', []>) => void,
+): TSESLint.RuleModule<'config', [], TSESLint.RuleListener> {
   return createRule<Option, MessageIds>({
     name,
     meta: {
@@ -23,7 +19,6 @@ export function createAssertConfigRule(
       messages,
       docs: {
         description: '',
-        category: 'Best Practices',
         recommended: 'error',
       },
     },

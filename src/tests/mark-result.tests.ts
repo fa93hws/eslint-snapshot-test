@@ -1,4 +1,4 @@
-import { Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
+import { TSESLint } from '@typescript-eslint/utils';
 import { EOL } from 'os';
 import { markResult } from '../mark-result';
 import { PositionHelper } from '../position-helper';
@@ -18,7 +18,7 @@ describe('markResult', () => {
     column: number;
     message?: string;
     endColumn?: number;
-  }): Linter.LintMessage => ({
+  }): TSESLint.Linter.LintMessage => ({
     line,
     endLine,
     column,
@@ -32,7 +32,7 @@ describe('markResult', () => {
 
   it('generates for one line code to the end without endColumn', () => {
     const codeLines = createLines(3);
-    const lintResult: Linter.LintMessage[] = [
+    const lintResult: TSESLint.Linter.LintMessage[] = [
       createLintMessage({ line: 1, column: 3, endLine: 1 }),
     ];
     const positionHelper = new PositionHelper(codeLines);
@@ -48,7 +48,7 @@ describe('markResult', () => {
 
   it('generates for one line error to the endColumn', () => {
     const codeLines = createLines(4);
-    const lintResult: Linter.LintMessage[] = [
+    const lintResult: TSESLint.Linter.LintMessage[] = [
       createLintMessage({ line: 1, endLine: 1, column: 3, endColumn: 6 }),
     ];
     const positionHelper = new PositionHelper(codeLines);
@@ -65,7 +65,7 @@ describe('markResult', () => {
 
   it('generates multiple one line errors', () => {
     const codeLines = createLines(3);
-    const lintResult: Linter.LintMessage[] = [
+    const lintResult: TSESLint.Linter.LintMessage[] = [
       createLintMessage({ line: 1, endLine: 1, column: 3, endColumn: 6 }),
       createLintMessage({ line: 3, endLine: 3, column: 3 }),
     ];
@@ -83,7 +83,7 @@ describe('markResult', () => {
 
   it('generates for multiple one line errors in multiple lines in order', () => {
     const codeLines = createLines(3);
-    const lintResult: Linter.LintMessage[] = [
+    const lintResult: TSESLint.Linter.LintMessage[] = [
       createLintMessage({ line: 3, endLine: 3, column: 3 }),
       createLintMessage({ line: 1, endLine: 1, column: 3, endColumn: 6 }),
     ];
@@ -101,7 +101,7 @@ describe('markResult', () => {
 
   it('generates for one error across two lines without endColumn', () => {
     const codeLines = createLines(5);
-    const lintResult: Linter.LintMessage[] = [
+    const lintResult: TSESLint.Linter.LintMessage[] = [
       createLintMessage({ line: 1, column: 3, endLine: 3 }),
     ];
     const positionHelper = new PositionHelper(codeLines);
@@ -121,7 +121,7 @@ describe('markResult', () => {
 
   it('generates for one error across two lines with endColumn', () => {
     const codeLines = createLines(5);
-    const lintResult: Linter.LintMessage[] = [
+    const lintResult: TSESLint.Linter.LintMessage[] = [
       createLintMessage({ line: 1, column: 3, endLine: 3, endColumn: 4 }),
     ];
     const positionHelper = new PositionHelper(codeLines);
@@ -141,7 +141,7 @@ describe('markResult', () => {
 
   it('generates for error after last column', () => {
     const codeLines = ['1'];
-    const lintResult: Linter.LintMessage[] = [
+    const lintResult: TSESLint.Linter.LintMessage[] = [
       createLintMessage({ line: 1, column: 2 }),
     ];
     const positionHelper = new PositionHelper(codeLines);
@@ -155,7 +155,7 @@ describe('markResult', () => {
 
   it('return the code nothing if there is no error', () => {
     const codeLines = createLines(3);
-    const lintResult: Linter.LintMessage[] = [];
+    const lintResult: TSESLint.Linter.LintMessage[] = [];
     const positionHelper = new PositionHelper(codeLines);
     const markedResult = markResult({
       codeLines,
@@ -167,7 +167,7 @@ describe('markResult', () => {
 
   it('generates for error happen at empty file at Program node', () => {
     const codeLines = [''];
-    const lintResult: Linter.LintMessage[] = [
+    const lintResult: TSESLint.Linter.LintMessage[] = [
       createLintMessage({ line: 0, column: 0 }),
     ];
     const positionHelper = new PositionHelper(codeLines);
@@ -181,7 +181,7 @@ describe('markResult', () => {
 
   it('generates for error to the end without endLine', () => {
     const codeLines = createLines(3);
-    const lintResult: Linter.LintMessage[] = [
+    const lintResult: TSESLint.Linter.LintMessage[] = [
       createLintMessage({ line: 1, column: 3 }),
     ];
     const positionHelper = new PositionHelper(codeLines);
@@ -203,7 +203,7 @@ describe('markResult', () => {
 
   it('generates for multiple errors on the same line', () => {
     const codeLines = createLines(3);
-    const lintResult: Linter.LintMessage[] = [
+    const lintResult: TSESLint.Linter.LintMessage[] = [
       createLintMessage({ line: 1, endLine: 1, column: 3, message: 'error0' }),
       createLintMessage({
         line: 1,

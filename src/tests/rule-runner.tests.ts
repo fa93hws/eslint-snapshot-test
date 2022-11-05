@@ -1,19 +1,16 @@
-import {
-  Linter,
-  RuleTesterConfig,
-} from '@typescript-eslint/experimental-utils/dist/ts-eslint';
+import { TSESLint } from '@typescript-eslint/utils';
 import { RuleRunner } from '../rule-runner';
 import { createAssertConfigRule } from '../utils/testing-rules/assert-config';
 
 describe('ruleRunner', () => {
   describe('when providing configs', () => {
-    const config = ({} as unknown) as RuleTesterConfig;
+    const config = ({} as unknown) as TSESLint.RuleTesterConfig;
     const code = '';
     const ruleName = 'ruleName';
-    let linter: Linter;
+    let linter: TSESLint.Linter;
 
     beforeEach(() => {
-      linter = new Linter();
+      linter = new TSESLint.Linter();
     });
 
     it('overrides the filename', () => {
@@ -82,7 +79,7 @@ describe('ruleRunner', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       lintMessages: readonly any[];
       fixReport?: { output: string };
-    }): Linter {
+    }): TSESLint.Linter {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const linter: any = {
         verify: () => lintMessages,
@@ -95,7 +92,7 @@ describe('ruleRunner', () => {
           }),
         }),
       };
-      return (linter as unknown) as Linter;
+      return (linter as unknown) as TSESLint.Linter;
     }
 
     function createRuleRunner({
