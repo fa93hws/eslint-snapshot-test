@@ -1,4 +1,4 @@
-import { Linter } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
+import { TSESLint } from '@typescript-eslint/utils';
 
 export type Range = {
   line: {
@@ -26,7 +26,7 @@ export class PositionHelper {
     this.lineWidths = lines.map((l) => l.length);
   }
 
-  public static getRange(result: Linter.LintMessage): Range {
+  public static getRange(result: TSESLint.Linter.LintMessage): Range {
     return {
       line: {
         // line starts from 1 in eslint

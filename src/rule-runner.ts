@@ -1,9 +1,5 @@
 import { EOL } from 'os';
-import {
-  ValidTestCase,
-  RuleTesterConfig,
-  Linter,
-} from '@typescript-eslint/experimental-utils/dist/ts-eslint';
+import { TSESLint } from '@typescript-eslint/utils';
 import merge from 'lodash.merge';
 import { PositionHelper } from './position-helper';
 import { assertExist } from './utils/preconditions';
@@ -11,14 +7,14 @@ import { markResult as _markResult, MarkResultFn } from './mark-result';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TestConfig<TOption extends readonly any[]> = Omit<
-  ValidTestCase<TOption>,
+  TSESLint.ValidTestCase<TOption>,
   'code' | 'options' | 'filename'
 > &
-  Partial<RuleTesterConfig>;
+  Partial<TSESLint.RuleTesterConfig>;
 
 export type RenderResult = {
   snapshot: string;
-  lintMessages: Linter.LintMessage[];
+  lintMessages: TSESLint.Linter.LintMessage[];
   fixedOutput: string | undefined;
 };
 
@@ -28,15 +24,15 @@ export class RuleRunner<TOption extends readonly any[]> {
 
   private ruleName: string;
 
-  private ruleOption: Linter.RuleLevelAndOptions = ['error'];
+  private ruleOption: TSESLint.Linter.RuleLevelAndOptions = ['error'];
 
   private filename?: string;
 
-  private config: RuleTesterConfig;
+  private config: TSESLint.RuleTesterConfig;
 
   private readonly code: string;
 
-  private readonly linter: Linter;
+  private readonly linter: TSESLint.Linter;
 
   private readonly positionHelper: PositionHelper;
 
@@ -50,9 +46,9 @@ export class RuleRunner<TOption extends readonly any[]> {
     markResult = _markResult,
   }: {
     code: string;
-    linter: Linter;
+    linter: TSESLint.Linter;
     ruleName: string;
-    config: RuleTesterConfig;
+    config: TSESLint.RuleTesterConfig;
     markResult?: MarkResultFn;
   }) {
     this.code = code;
@@ -85,7 +81,11 @@ export class RuleRunner<TOption extends readonly any[]> {
     return this;
   }
 
-  private get parameter(): [string, Linter.Config, { filename?: string }] {
+  private get parameter(): [
+    string,
+    TSESLint.Linter.Config,
+    { filename?: string },
+  ] {
     return [
       this.code,
       {
@@ -97,7 +97,7 @@ export class RuleRunner<TOption extends readonly any[]> {
   }
 
   public render(): {
-    lintMessages: Linter.LintMessage[];
+    lintMessages: TSESLint.Linter.LintMessage[];
     snapshot: string;
     fixedOutput?: string;
   } {
