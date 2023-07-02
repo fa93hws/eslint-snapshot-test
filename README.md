@@ -6,7 +6,7 @@
 
 # How to use
 
-```
+```js
 import { SnapshotCreator } from 'eslint-snapshot-tester';
 import { semi } from 'eslint/rules/semi';
 
