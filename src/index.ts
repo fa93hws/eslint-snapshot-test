@@ -3,6 +3,7 @@ import { RuleRunner } from './rule-runner';
 
 type SnapshotCreatorConfig = TSESLint.RuleTesterConfig & {
   cwd?: string;
+  overrideParserModule?: TSESLint.Linter.ParserModule;
 };
 
 export class SnapshotCreator {
@@ -10,8 +11,12 @@ export class SnapshotCreator {
 
   public constructor(private readonly config: SnapshotCreatorConfig) {
     this.linter = new TSESLint.Linter({ cwd: config.cwd });
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    this.linter.defineParser(config.parser, require(config.parser));
+    if (config.overrideParserModule != null) {
+      this.linter.defineParser(config.parser, config.overrideParserModule);
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      this.linter.defineParser(config.parser, require(config.parser));
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
